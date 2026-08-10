@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace Editor | Persuado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="un-resources.html">Research</a>
+        <a class="site-nav__link" href="countries.html">Countries</a>
+        <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+        <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+        <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+        <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+        <a class="site-nav__link" href="glossary.html">Glossary</a>
+        <a class="site-nav__link" href="about.html">About</a>
+      </div>
+      <div class="site-nav__actions"><div id="navAuthLinks"></div>
+        <span id="saveStatus" style="color:#172033;margin-right:14px;">Last saved: —</span>
+        <button id="deleteWorkspaceButton" class="button button-secondary">Delete Workspace</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <section class="section">
+      <div id="workspaceLoadingState" class="state-card state-loading" role="status">Loading workspace…</div>
+      <div id="workspaceEditorMessage" class="message-box hidden"></div>
+      <div class="card">
+        <label for="workspaceName">Workspace Name</label>
+        <input id="workspaceName" type="text" placeholder="Workspace name" class="workspace-field">
+        <label for="workspaceCommittee">Committee</label>
+        <input id="workspaceCommittee" type="text" placeholder="Committee name" class="workspace-field">
+        <label for="workspaceCountry">Country</label>
+        <input id="workspaceCountry" type="text" placeholder="Country" class="workspace-field">
+      </div>
+
+      <div class="card">
+        <label for="researchNotes">Research Notes</label>
+        <textarea id="researchNotes" rows="8" placeholder="Enter research notes..."></textarea>
+      </div>
+
+      <div class="card">
+        <label for="speeches">Speeches</label>
+        <textarea id="speeches" rows="6" placeholder="Draft speeches and talking points..."></textarea>
+      </div>
+
+      <div class="card">
+        <label for="pois">Points of Information (POIs)</label>
+        <textarea id="pois" rows="4" placeholder="List your POIs..."></textarea>
+      </div>
+
+      <div class="card">
+        <label for="resolutions">Resolutions</label>
+        <textarea id="resolutions" rows="6" placeholder="Draft your resolutions..."></textarea>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Autosave is enabled for workspace editing.</p>
+  </footer>
+
+  <script type="module" src="js/workspace-editor.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

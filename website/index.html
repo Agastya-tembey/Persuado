@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persuado | Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body class="home-page">
+  <header class="site-header">
+    <nav class="site-nav site-nav--homepage" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="login.html">Login</a>
+        <a class="site-nav__link" href="signup.html">Create account</a>
+      </div>
+      <div class="site-nav__actions">
+        <div id="navAuthLinks"></div>
+      </div>
+    </nav>
+    <div class="hero-card">
+      <h1>Build confidence in MUN, speech, and research.</h1>
+      <p>Access free learning resources for Model United Nations and unlock productivity tools when you sign up for a free Persuado account.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="signup.html">Create free account</a>
+        <a class="button button-secondary" href="#guest-features">Explore free content</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-container">
+    <section class="section" id="guest-features">
+      <div class="section-header">
+        <h2>Free resources for every delegate</h2>
+        <p>Guest users can explore reliable MUN guides, committee directories, country profiles, and UN reference content without signing in.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Research Hub</h3>
+          <p>Open tutorials, research guides, and topic research fundamentals for Model UN preparation.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Committee Directory</h3>
+          <p>Explore major UN committees, MUN organs, and common crisis committees used in tournaments.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Country Statistics</h3>
+          <p>Use the country research index to review national profiles, facts, and diplomatic insights.</p>
+        </article>
+        <article class="feature-card">
+          <h3>UN Agencies Directory</h3>
+          <p>Find official UN agency portals, programme resources, and agency briefs for your conference prep.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section secondary-section">
+      <div class="section-header">
+        <h2>Upgrade for personal productivity</h2>
+        <p>Registered users unlock note saving, bookmarks, committee tracking, document access, and progress monitoring.</p>
+      </div>
+      <div class="restricted-grid">
+        <div class="restricted-card">
+          <h3>Save Research Notes</h3>
+          <p>Create and store your own MUN research notes so you can return to them anytime.</p>
+          <button type="button" class="restricted-action" data-feature="notes">Save notes</button>
+        </div>
+        <div class="restricted-card">
+          <h3>Bookmark Countries</h3>
+          <p>Keep track of the countries you are studying with one click and organize them later.</p>
+          <button type="button" class="restricted-action" data-feature="bookmarks">Bookmark country</button>
+        </div>
+        <div class="restricted-card">
+          <h3>Personal Dashboard</h3>
+          <p>Use your personal dashboard to organize research, committee interests, and preparation progress.</p>
+          <button type="button" class="restricted-action" data-feature="dashboard">View dashboard</button>
+        </div>
+      </div>
+      <div id="upgradePrompt" class="message-box hidden"></div>
+    </section>
+
+    <section class="section">
+      <div class="centered-block card">
+        <h2>Guest access stays free</h2>
+        <p>All basic educational content remains available on this site. Create a free account only when you're ready to save your own work and access it from any device.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Persuado © 2026 — Free MUN resources + productivity tools for registered users.</p>
+  </footer>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

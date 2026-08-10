@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Country — Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f7f9fc;--card:#fff;--text:#172033;--muted:#52607d;--royal:#0b1d3c}
+    body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0}
+    header{background:linear-gradient(90deg,var(--royal),#1b4a8a);color:#fff;padding:28px 16px;text-align:center}
+    .wrap{width:min(92%,980px);margin:20px auto}
+    .card{background:var(--card);padding:18px;border-radius:8px;box-shadow:0 1px 0 rgba(11,30,60,0.04);border:1px solid rgba(11,30,60,0.04)}
+    h1{font-family:Montserrat, sans-serif;margin:0 0 8px}
+    .meta{color:var(--muted);margin-bottom:12px}
+    dl{display:grid;grid-template-columns:160px 1fr;gap:6px 12px}
+    dt{font-weight:700;color:var(--royal)}
+    dd{margin:0}
+    .notfound{padding:36px;text-align:center}
+    .state-card{padding:22px 24px;border-radius:14px;border:1px solid rgba(11,30,60,0.08);background:#fff;box-shadow:0 8px 24px rgba(11,30,60,0.06);margin:18px 0}
+    .state-card h2{margin:0 0 8px;color:var(--royal)}
+    .state-card p{margin:0;color:var(--muted);line-height:1.7}
+    .state-card.state-loading{background:rgba(31,79,192,0.05);border-color:rgba(31,79,192,0.16)}
+    .state-card.state-empty{background:rgba(31,79,192,0.04);border-style:dashed;border-color:rgba(31,79,192,0.18)}
+    .state-card.state-error{background:#fff2f2;border-color:#f1c6c6}
+    .state-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .button{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border:none;border-radius:999px;font-weight:700;text-decoration:none;cursor:pointer}
+    .button-primary{background:var(--royal);color:#fff}
+    a.back{display:inline-block;margin-top:12px;color:var(--royal);text-decoration:none;font-weight:700}
+    /* Chat widget styles */
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:12px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--royal);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:12px 20px;background:linear-gradient(135deg,var(--royal),#1b4a8a);box-shadow:0 12px 30px rgba(0,0,0,0.08);margin-bottom:16px}
+    .toolbar a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.12)}
+    @media (max-width:560px){dl{grid-template-columns:1fr}}
+    .contact-btn{display:inline-block;background:var(--royal);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
+    .contact-btn:hover{background:#152d54}
+    .country-briefing{display:flex;flex-direction:column;gap:18px}
+    .hero-card{background:linear-gradient(135deg,rgba(11,30,60,0.04),rgba(31,79,192,0.08));border:1px solid rgba(11,30,60,0.06);border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+    .hero-card__eyebrow{font-size:0.8rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--royal);opacity:0.8}
+    .hero-card h1{font-size:1.8rem;margin:0;color:var(--royal)}
+    .hero-card__meta{color:var(--muted);font-size:0.98rem;line-height:1.6}
+    .hero-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;margin-top:4px}
+    .hero-item{display:flex;flex-direction:column;gap:4px}
+    .hero-item__label{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+    .hero-item__value{font-weight:700;color:var(--text)}
+    .detail-sections{display:flex;flex-direction:column;gap:12px}
+    .detail-section{border:1px solid rgba(11,30,60,0.08);border-radius:12px;background:#fff;overflow:hidden}
+    .section-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;background:transparent;border:none;text-align:left;cursor:pointer;font-weight:700;color:var(--royal);font-size:1rem}
+    .section-toggle__icon{font-size:1.1rem;color:var(--muted)}
+    .detail-section-content{padding:0 18px 18px}
+    .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
+    .detail-item{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-bottom:1px solid rgba(11,30,60,0.06)}
+    .detail-item:last-child,.detail-item:nth-last-child(2){border-bottom:none}
+    .detail-label{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+    .detail-value{font-size:0.96rem;line-height:1.6;color:var(--text)}
+    .detail-value--badges{display:flex;flex-wrap:wrap;gap:8px}
+    .info-badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(31,79,192,0.1);color:var(--royal);font-size:0.85rem;font-weight:700}
+    @media (max-width:768px){.hero-grid,.detail-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation" style="margin-top:-8px;margin-bottom:18px;">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link site-nav__link--active" href="countries.html" aria-current="page">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+  <main class="wrap">
+    <div id="content" class="card"></div>
+    <a href="countries.html" class="back">← Back to Country Research</a>
+    <a href="index.html" class="back">Return to Persuado Home</a>
+    <p><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+  </main>
+
+  <!-- Chat widget -->
+  <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+  <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+    <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+    <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+  </div>
+
+  <!-- Chat widget initialization -->
+  <script>
+    (function(){
+      const url = 'https://delegate-helper.lovable.app';
+      const btn = document.getElementById('chatBtn');
+      const modal = document.getElementById('chatModal');
+      const iframe = document.getElementById('chatIframe');
+      const close = document.getElementById('chatClose');
+      btn.addEventListener('click', function(){
+        const w = window.open(url,'delegateHelper','width=420,height=680');
+        if(w && !w.closed){ w.focus(); return; }
+        iframe.src = url;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+      });
+      close.addEventListener('click', function(){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+        iframe.src = '';
+      });
+      document.addEventListener('click', (e) => {
+        if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src = '';
+        }
+      });
+    })();
+  </script>
+
+  <!-- Country page rendering -->
+  <script>
+    function slugFromQuery(){
+      const params = new URLSearchParams(location.search);
+      return (params.get('c') || '').toLowerCase();
+    }
+
+    function slugFromCountryName(name){
+      return String(name || '')
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, ' ')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    const COUNTRY_SLUG_ALIASES = {
+      'russia': 'russian-federation',
+      'united-states': 'united-states-of-america',
+      'united-kingdom': 'united-kingdom-of-great-britain-and-northern-ireland',
+      'turkey': 'turkiye',
+      'vietnam': 'viet-nam',
+      'korea-north': 'democratic-people-s-republic-of-korea',
+      'korea-south': 'republic-of-korea',
+      'venezuela': 'venezuela-bolivarian-republic-of',
+      'syria': 'syrian-arab-republic',
+      'tanzania': 'united-republic-of-tanzania',
+      'moldova': 'republic-of-moldova',
+      'gambia': 'the-gambia'
+    };
+
+    function renderStateCard(title, description, type = 'loading', actions = ''){
+      const role = type === 'error' ? 'alert' : 'status';
+      return `<div class="state-card state-${type}" role="${role}"><h2>${title}</h2><p>${description}</p>${actions ? `<div class="state-actions">${actions}</div>` : ''}</div>`;
+    }
+
+    function renderNotFound(slug){
+      document.getElementById('content').innerHTML = renderStateCard('Country not found', `There is no data for <strong>${slug}</strong>.`, 'empty');
+    }
+
+    function formatValue(value){
+      return value === undefined || value === null || value === '' ? '—' : value;
+    }
+
+    let allCountries = [];
+
+    function formatNumber(num) {
+      if (!num) return '—';
+      num = parseFloat(num);
+      if (isNaN(num)) return '—';
+      return num.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+
+    function formatCurrency(val) {
+      if (!val) return '—';
+      const num = parseFloat(val);
+      if (isNaN(num)) return '—';
+      return 'US$' + num.toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' billion';
+    }
+
+    function formatPercent(val) {
+      if (!val) return '—';
+      const num = parseFloat(val);
+      if (isNaN(num)) return '—';
+      return num.toFixed(1) + '%';
+    }
+
+    function renderCountry(data){
+      const el = document.getElementById('content');
+
+      const heroItems = [
+        { label: 'Country', value: formatValue(data.Country) },
+        { label: 'Official Name', value: formatValue(data['Official Name']) },
+        { label: 'Capital', value: formatValue(data.Capital) },
+        { label: 'Government Type', value: formatValue(data['Gov Type']) },
+        { label: 'Head of State', value: formatValue(data['Head of State']) },
+        { label: 'Population', value: formatValue(data['Population 2026']) },
+        { label: 'GDP', value: formatCurrency(data['GDP USD B']) },
+        { label: 'HDI', value: formatValue(data.HDI) }
+      ];
+
+      const sections = [
+        {
+          title: 'General Information',
+          defaultOpen: true,
+          fields: [
+            { label: 'Official Name', key: 'Official Name' },
+            { label: 'ISO-2', key: 'ISO-2' },
+            { label: 'ISO-3', key: 'ISO-3' },
+            { label: 'UN Member', key: 'UN Member' },
+            { label: 'Capital', key: 'Capital' },
+            { label: 'Largest City', key: 'Largest City' },
+            { label: 'Population', key: 'Population 2026' },
+            { label: 'Population Density', key: 'Pop. Density' },
+            { label: 'Land Area', key: 'Land Area km2' },
+            { label: 'Demonym', key: 'Demonym' },
+            { label: 'Languages', key: 'Languages' },
+            { label: 'Time Zone', key: 'Time Zone' }
+          ]
+        },
+        {
+          title: 'Government & Politics',
+          fields: [
+            { label: 'Government Type', key: 'Gov Type' },
+            { label: 'Head of State', key: 'Head of State' },
+            { label: 'Head of Government', key: 'Head of Gov' },
+            { label: 'Leader Title', key: 'Leader Title' },
+            { label: 'Leader Name', key: 'Leader Name' },
+            { label: 'Legislature', key: 'Legislature' },
+            { label: 'Chambers', key: 'Chambers' }
+          ]
+        },
+        {
+          title: 'Economy',
+          fields: [
+            { label: 'GDP', key: 'GDP USD B' },
+            { label: 'GDP Per Capita', key: 'GDP per Capita' },
+            { label: 'GDP Growth', key: 'GDP Growth %' },
+            { label: 'Inflation', key: 'Inflation %' },
+            { label: 'Unemployment', key: 'Unemployment %' },
+            { label: 'Currency', key: 'Currency' },
+            { label: 'Currency Code', key: 'Currency Code' },
+            { label: 'Major Industries', key: 'Major Industries' },
+            { label: 'Major Exports', key: 'Major Exports' },
+            { label: 'Major Imports', key: 'Major Imports' }
+          ]
+        },
+        {
+          title: 'Defence & Security',
+          fields: [
+            { label: 'Military Spending', key: 'Military Spend M' },
+            { label: 'Active Military', key: 'Active Military' },
+            { label: 'Nuclear Status', key: 'Nuclear' }
+          ]
+        },
+        {
+          title: 'International Relations',
+          fields: [
+            { label: 'International Organisations', key: 'International Organisations' },
+            { label: 'Regional Alliances', key: 'Regional Alliances' },
+            { label: 'UN Group', key: 'UN Group' },
+            { label: 'Foreign Policy', key: 'Foreign Policy' },
+            { label: 'Current Issues', key: 'Current Issues' }
+          ]
+        },
+        {
+          title: 'Society & Development',
+          fields: [
+            { label: 'HDI', key: 'HDI' },
+            { label: 'Literacy', key: 'Literacy %' },
+            { label: 'Life Expectancy', key: 'Life Expectancy' }
+          ]
+        },
+        {
+          title: 'Environment',
+          fields: [
+            { label: 'Climate', key: 'Climate' },
+            { label: 'CO₂ Emissions', key: 'CO2 Emissions' },
+            { label: 'Renewable Energy', key: 'Renewable %' }
+          ]
+        },
+        {
+          title: 'Communications',
+          fields: [
+            { label: 'Phone Code', key: 'Phone Code' },
+            { label: 'Internet TLD', key: 'Internet TLD' },
+            { label: 'Time Zone', key: 'Time Zone' }
+          ]
+        }
+      ];
+
+      const renderField = (row) => {
+        const rawValue = data[row.key];
+        if (row.key === 'GDP USD B') {
+          return formatCurrency(rawValue);
+        }
+        if (row.key === 'International Organisations' || row.key === 'Regional Alliances') {
+          const values = String(rawValue || '').split(',').map((item) => item.trim()).filter(Boolean);
+          if (values.length === 0) return '—';
+          return `<div class="detail-value--badges">${values.map((value) => `<span class="info-badge">${formatValue(value)}</span>`).join('')}</div>`;
+        }
+        return formatValue(rawValue);
+      };
+
+      const sectionHtml = sections.map((section) => {
+        const contentId = `${section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-content`;
+        const isOpen = section.defaultOpen ? 'true' : 'false';
+        const icon = section.defaultOpen ? '−' : '+';
+        return `
+          <section class="detail-section">
+            <button class="section-toggle" type="button" aria-expanded="${isOpen}" aria-controls="${contentId}">
+              <span>${section.title}</span>
+              <span class="section-toggle__icon">${icon}</span>
+            </button>
+            <div id="${contentId}" class="detail-section-content" ${section.defaultOpen ? '' : 'hidden'}>
+              <div class="detail-grid">
+                ${section.fields.map((field) => `
+                  <div class="detail-item">
+                    <div class="detail-label">${field.label}</div>
+                    <div class="detail-value">${renderField(field)}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        `;
+      }).join('');
+
+      el.innerHTML = `
+        <div class="country-briefing">
+          <div class="hero-card">
+            <div class="hero-card__eyebrow">Country briefing</div>
+            <h1>${formatValue(data.Country)}</h1>
+            <div class="hero-card__meta">${formatValue(data['Official Name'])}</div>
+            <div class="hero-grid">
+              ${heroItems.map((item) => `
+                <div class="hero-item">
+                  <div class="hero-item__label">${item.label}</div>
+                  <div class="hero-item__value">${item.value}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="detail-sections">
+            ${sectionHtml}
+          </div>
+        </div>
+      `;
+
+      document.querySelectorAll('.section-toggle').forEach((button) => {
+        button.addEventListener('click', () => {
+          const content = document.getElementById(button.getAttribute('aria-controls'));
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
+          button.setAttribute('aria-expanded', String(!isExpanded));
+          button.querySelector('.section-toggle__icon').textContent = isExpanded ? '+' : '−';
+          content.hidden = isExpanded;
+        });
+      });
+    }
+
+    const slug = slugFromQuery();
+    if (!slug) {
+      renderNotFound('');
+    } else {
+      document.getElementById('content').innerHTML = renderStateCard('Loading country details', 'Please wait while we retrieve the country profile.', 'loading');
+      let settled = false;
+      const timeoutId = window.setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        document.getElementById('content').innerHTML = renderStateCard('Loading is taking longer than expected', "We couldn't load the country data in time. Please try again.", 'error', '<button class="button button-primary" type="button" onclick="window.location.reload()">Retry</button>');
+      }, 10000);
+
+      const finishRequest = (callback) => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeoutId);
+        callback();
+      };
+
+      fetch('data/countries.json')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to load country dataset');
+          }
+          return response.json();
+        })
+        .then((json) => {
+          finishRequest(() => {
+            allCountries = Array.isArray(json.Sheet1) ? json.Sheet1 : Array.isArray(json) ? json : [];
+            const candidateSlugs = [slug];
+            if (COUNTRY_SLUG_ALIASES[slug]) {
+              candidateSlugs.push(COUNTRY_SLUG_ALIASES[slug]);
+            }
+            const record = allCountries.find((country) => candidateSlugs.includes(slugFromCountryName(country.Country)));
+            if (record) {
+              renderCountry(record);
+            } else {
+              renderNotFound(slug);
+            }
+          });
+        })
+        .catch((error) => {
+          finishRequest(() => {
+            console.error(error);
+            document.getElementById('content').innerHTML = renderStateCard('Unable to load country data', 'Please try again later.', 'error');
+          });
+        });
+    }
+  </script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspaces | Persuado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="un-resources.html">Research</a>
+        <a class="site-nav__link" href="countries.html">Countries</a>
+        <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+        <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+        <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+        <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+        <a class="site-nav__link" href="glossary.html">Glossary</a>
+        <a class="site-nav__link" href="about.html">About</a>
+      </div>
+      <div class="site-nav__actions"><div id="navAuthLinks"></div>
+        <a class="button button-primary" id="createWorkspaceButton">Create Workspace</a>
+      </div>
+    </nav>
+    <div class="dashboard-hero">
+      <h1>Your workspaces</h1>
+      <p>Create, open, edit, and delete your research workspaces.</p>
+    </div>
+  </header>
+
+  <main class="page-container">
+    <section class="section">
+      <div id="workspaceLoading" class="state-card state-loading" role="status">Loading your workspaces…</div>
+      <div id="workspaceMessage" class="message-box hidden"></div>
+      <div id="createWorkspaceForm" class="card" style="display:none;">
+        <h2>Create a new workspace</h2>
+        <label for="newWorkspaceName">Workspace Name</label>
+        <input id="newWorkspaceName" class="workspace-field" type="text" placeholder="Workspace name">
+        <label for="newWorkspaceCommittee">Committee</label>
+        <input id="newWorkspaceCommittee" class="workspace-field" type="text" placeholder="Committee">
+        <label for="newWorkspaceCountry">Country</label>
+        <input id="newWorkspaceCountry" class="workspace-field" type="text" placeholder="Country">
+        <div class="workspace-actions">
+          <button id="cancelCreateWorkspace" class="button button-secondary">Cancel</button>
+          <button id="submitCreateWorkspace" class="button button-primary">Create Workspace</button>
+        </div>
+      </div>
+      <div id="workspaceEmpty" class="card" style="display:none;">
+        <h2>No workspaces yet</h2>
+        <p>Create a workspace to save your research, speeches, and resolutions.</p>
+      </div>
+      <div id="workspaceList" class="dashboard-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Workspace data is saved securely with Firebase.</p>
+  </footer>
+
+  <script type="module" src="js/workspace-list.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opening Statements | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f4f7fd;--card:#ffffff;--text:#172033;--muted:#52607d;--royal:#0b1d3c}
+    body{margin:0;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+    h1,h2,h3,h4,h5,h6{font-family:'Montserrat',sans-serif}
+    header{background:transparent;padding:20px;text-align:center}
+    header h1{color:var(--royal);margin:0}
+    .container{width:min(92%,1100px);margin:0 auto;padding:28px 0 60px}
+    .intro{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 12px 30px rgba(11,30,60,0.06);margin-bottom:18px;color:var(--text)}
+    .intro h1{margin:0 0 8px;font-size:clamp(1.6rem,2.6vw,2.4rem)}
+    .intro p{margin:0;color:var(--muted)}
+    .content{background:var(--card);border-radius:12px;padding:24px;color:var(--text);box-shadow:0 12px 30px rgba(11,30,60,0.06)}
+    .content p{margin:0 0 16px;line-height:1.8;color:var(--text)}
+    .blockquote{background:#f9fafb;border-left:4px solid var(--royal);padding:16px;margin:20px 0;border-radius:4px;font-style:italic;color:var(--muted)}
+    .back-link{display:inline-block;margin-top:20px;color:var(--royal);text-decoration:none;font-weight:600}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:12px 20px;background:linear-gradient(135deg,var(--royal),#1b4a8a);box-shadow:0 12px 30px rgba(0,0,0,0.08);margin-bottom:16px}
+    .toolbar a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.12)}
+    .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:26px 0}
+    .topic-card{background:var(--card);border:1px solid rgba(11,30,60,0.08);border-radius:14px;padding:22px;box-shadow:0 12px 26px rgba(11,30,60,0.05)}
+    .topic-card h2{margin:0 0 10px;font-size:1.16rem;color:var(--royal)}
+    .topic-card p{margin:0;color:var(--text);line-height:1.65}
+    @media(max-width:720px){.topic-grid{grid-template-columns:1fr}}
+    .back-link:hover{text-decoration:underline}
+    .topic-card{cursor:pointer;transition:transform 0.2s ease, box-shadow 0.2s ease}
+    .topic-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(11,30,60,0.12)}
+    .modal{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);overflow:auto}
+    .modal-content{background-color:var(--card);margin:5% auto;padding:30px;border-radius:12px;width:90%;max-width:900px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(11,30,60,0.2)}
+    .modal-close{color:var(--royal);float:right;font-size:28px;font-weight:bold;cursor:pointer}
+    .modal-close:hover{color:#152d54}
+    .modal h2{margin-top:0;color:var(--royal)}
+    .modal p{color:var(--text);line-height:1.8}
+    /* Chat widget styles */
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:12px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--royal);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+    .contact-btn{display:inline-block;background:var(--royal);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
+    .contact-btn:hover{background:#152d54}
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link" href="countries.html">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link site-nav__link--active" href="opening-statements.html" aria-current="page">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+  <div class="container">
+    <div class="intro">
+      <h1>Opening Statements</h1>
+      <p>Learn how to craft and deliver a powerful first impression that establishes your country's position and influence.</p>
+    </div>
+    <section class="section">
+      <div class="topic-grid">
+        <div class="topic-card" onclick="openModal('openingStatementModal')">
+          <h2>A. Opening Statement Structure</h2>
+          <p>Start with a strong introduction, clearly state your country’s position, and explain why the agenda matters to your delegation.</p>
+        </div>
+        <div class="topic-card">
+          <h2>B. Position & Solutions</h2>
+          <p>Include your national priorities, proposed solutions, and a brief rationale for your policy approach.</p>
+        </div>
+        <div class="topic-card">
+          <h2>C. Delivery & Confidence</h2>
+          <p>Practice timing, maintain clear speech, and use confident body language to make your opening memorable.</p>
+        </div>
+      </div>
+    </section>
+    <div style="background:var(--card);padding:30px;border-radius:12px;text-align:center;margin:30px 0;">
+      <p style="color:var(--muted);margin:0;">Explore the key techniques and best practices for effective speech delivery in committee settings.</p>
+    </div>
+
+    <div id="openingStatementModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('openingStatementModal')">&times;</span>
+        <h2>Opening Statement Structure & Delivery Guide</h2>
+        <p>The best way to introduce your country's position is to clearly and concisely explain your nation's stance on the agenda. An opening statement should immediately establish where your country stands on the issue and why it considers the topic important. Delegates should also mention a relevant policy, law, resolution, initiative, or action that their country has implemented to address the issue, demonstrating credibility and commitment. A strong opening statement should not focus solely on describing the problem; it should also briefly highlight the solutions your country supports and the objectives it hopes to achieve during committee debate.</p>
+        <p>Delegates should ensure that their speech remains focused on their country's perspective rather than providing a general overview of the topic. Including a key statistic, recent development, or notable national achievement related to the agenda can help strengthen the statement and make it more memorable. It is also important to acknowledge the international nature of the issue and emphasize the need for cooperation among member states where appropriate.</p>
+        <p>Before delivering the speech, delegates should practice it multiple times to ensure that it fits within the allotted time limit and can be delivered confidently without excessive reliance on notes. Strong eye contact, clear speaking, and a confident tone can often be just as important as the content itself. Delegates should avoid speaking too quickly and should focus on communicating their message effectively. Delegates should also remember that time limits for opening statements are generally intended as guidelines rather than strict cut-off points. While it is important to remain within the allocated speaking time, exceeding the limit by a few seconds is usually not a major issue in most conferences. Going over by approximately 5–10 seconds is unlikely to result in any significant consequences, provided that the delegate is concluding their speech and not substantially exceeding the allotted time. However, delegates should still aim to be concise and well-prepared, as respecting committee procedures demonstrates professionalism and allows equal speaking opportunities for all participants.</p>
+        <p>Since opening statements are often the first impression that delegates make on the committee, they can significantly influence how other countries perceive potential partnerships and future cooperation. A well-prepared opening statement can establish credibility, demonstrate knowledge of the agenda, attract potential allies, and set the tone for successful participation throughout the conference. By clearly outlining national priorities, proposed solutions, and a willingness to engage in constructive dialogue, delegates can create a strong foundation for negotiations, resolution writing, and bloc-building later in the committee session. Additionally, delegates should remember that the purpose of an opening statement is not to present every aspect of their country's policy. Instead, it should serve as a concise introduction that sparks interest, communicates key priorities, and positions the delegation within the broader committee debate. A clear, confident, and well-structured opening statement can often make a stronger impression than a longer speech filled with excessive detail.</p>
+      </div>
+    </div>
+
+    <a class="back-link" href="index.html">Return to Persuado Home</a>
+    <p><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+
+    <!-- Chat widget -->
+    <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+    <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+      <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+      <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+    </div>
+
+    <script>
+      function openModal(modalId){
+        const modal = document.getElementById(modalId);
+        if(modal){modal.style.display = 'block';}
+      }
+      function closeModal(modalId){
+        const modal = document.getElementById(modalId);
+        if(modal){modal.style.display = 'none';}
+      }
+      window.onclick = function(event){
+        if(event.target.classList && event.target.classList.contains('modal')){
+          event.target.style.display = 'none';
+        }
+      }
+      (function(){
+        const url = 'https://delegate-helper.lovable.app';
+        const btn = document.getElementById('chatBtn');
+        const modal = document.getElementById('chatModal');
+        const iframe = document.getElementById('chatIframe');
+        const close = document.getElementById('chatClose');
+        btn.addEventListener('click', function(){
+          const w = window.open(url,'delegateHelper','width=420,height=680');
+          if(w && !w.closed){ w.focus(); return; }
+          iframe.src = url;
+          modal.style.display = 'flex';
+          modal.setAttribute('aria-hidden','false');
+        });
+        close.addEventListener('click', function(){
+          modal.style.display='none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src='';
+        });
+        document.addEventListener('click', (e) => {
+          if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden','true');
+            iframe.src = '';
+          }
+        });
+      })();
+    </script>
+
+  </div>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

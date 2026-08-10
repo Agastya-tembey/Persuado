@@ -1,0 +1,39 @@
+    rules_version = '2';
+    service cloud.firestore {
+    match /databases/{database}/documents {
+        match /workspaces/{workspaceId} {
+        allow create: if request.auth != null
+            && request.resource.data.ownerId == request.auth.uid
+            && request.resource.data.name is string
+            && request.resource.data.committee is string
+            && request.resource.data.country is string
+            && request.resource.data.researchNotes is string
+            && request.resource.data.speeches is string
+            && request.resource.data.pois is string
+            && request.resource.data.resolutions is string
+            && request.resource.data.createdAt == request.time
+            && request.resource.data.updatedAt == request.time;
+
+        allow get: if request.auth != null
+            && resource.data.ownerId == request.auth.uid;
+
+        allow list: if request.auth != null
+            && resource.data.ownerId == request.auth.uid;
+
+        allow update: if request.auth != null
+            && resource.data.ownerId == request.auth.uid
+            && request.resource.data.ownerId == resource.data.ownerId
+            && request.resource.data.name is string
+            && request.resource.data.committee is string
+            && request.resource.data.country is string
+            && request.resource.data.researchNotes is string
+            && request.resource.data.speeches is string
+            && request.resource.data.pois is string
+            && request.resource.data.resolutions is string
+            && request.resource.data.updatedAt == request.time;
+
+        allow delete: if request.auth != null
+            && resource.data.ownerId == request.auth.uid;
+        }
+    }
+    }

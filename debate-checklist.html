@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debate Checklist | Persuado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body>
+    <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="un-resources.html">Research</a>
+        <a class="site-nav__link" href="countries.html">Countries</a>
+        <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+        <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+        <a class="site-nav__link site-nav__link--active" href="debate-checklist.html" aria-current="page">MUN Checklist</a>
+        <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+        <a class="site-nav__link" href="glossary.html">Glossary</a>
+        <a class="site-nav__link" href="about.html">About</a>
+      </div>
+      <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+    </nav>
+
+    <main class="page-container checklist-page">
+      <section class="section">
+        <div class="dashboard-hero card hero-panel">
+          <div class="hero-copy-panel">
+            <p class="eyebrow">FREE TOOL</p>
+            <h1>MUN Preparation Checklist</h1>
+            <p class="hero-copy">Track your research, speech, resolution, and conference readiness with a polished MUN prep dashboard that stores your progress locally.</p>
+            <div class="hero-summary-card card hero-benefits">
+              <p class="hero-summary-title">Why this checklist works</p>
+              <ul class="benefits-list">
+                <li>✓ No account required</li>
+                <li>✓ Progress saved locally</li>
+                <li>✓ Free forever</li>
+                <li>✓ Works on any device</li>
+              </ul>
+            </div>
+          </div>
+          <div class="hero-cta-panel card hero-cta">
+            <p class="eyebrow">Build beyond the checklist</p>
+            <h2>Create your Persuado workspace</h2>
+            <p>Store your notes, speeches, POIs, and draft resolutions in one secure place designed for delegate preparation.</p>
+            <div class="benefit-grid">
+              <span>• Research Notes</span>
+              <span>• Speech Drafts</span>
+              <span>• POIs & Arguments</span>
+              <span>• Resolution Drafts</span>
+            </div>
+            <a href="signup.html" class="button button-primary">Start your workspace</a>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <p class="stat-label">Completion</p>
+            <div class="stat-value" id="progressValue">0%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📌</div>
+            <p class="stat-label">Tasks Completed</p>
+            <div class="stat-value"><span id="completedCount">0</span> / <span id="totalCount">0</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🚀</div>
+            <p class="stat-label">Status</p>
+            <div class="stat-value" id="statusLabel">Getting started</div>
+          </div>
+        </div>
+
+        <div class="progress-card card">
+          <div class="progress-card-header">
+            <h2>Preparation score</h2>
+            <span class="progress-value-inline" id="progressValueInline">0%</span>
+          </div>
+          <div class="progress-bar large" aria-label="Checklist progress">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="checklist-actions">
+          <button id="resetChecklist" class="button button-secondary">Reset Checklist</button>
+        </div>
+
+        <div id="completionMessage" class="card message-box success completion-banner" style="display:none;">
+          <h2>🎉 You are conference-ready.</h2>
+          <p>Good luck, Delegate.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div id="checklistContainer" class="lists"></div>
+      </section>
+
+      <section class="section">
+        <div class="premium-card card">
+          <div>
+            <p class="eyebrow">Upgrade your prep</p>
+            <h2>Create a Persuado workspace for MUN</h2>
+            <p>Save your research notes, speeches, POIs, and draft resolutions in a secure workspace designed for high-performing delegates.</p>
+          </div>
+          <a href="signup.html" class="button button-primary">Sign up for free</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="resetModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+      <div class="modal-card">
+        <h2 id="resetModalTitle">Reset your checklist?</h2>
+        <p>Clearing the checklist will remove all saved progress from this browser. This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button id="cancelReset" class="button button-secondary">Cancel</button>
+          <button id="confirmReset" class="button button-primary">Reset checklist</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>Progress survives page refresh and browser restart with local storage. No login required.</p>
+    </footer>
+  <script type="module" src="js/debate-checklist.js"></script>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

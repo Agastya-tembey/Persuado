@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>UN Resources | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f4f7fd;--card:#ffffff;--text:#172033;--muted:#52607d;--royal:#0b1d3c}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0}
+    h1,h2,h3,h4,h5,h6{font-family:'Montserrat',sans-serif}
+    header{background:transparent;padding:20px;text-align:center}
+    header h1{color:var(--royal);margin:0}
+    .container{width:min(92%,1100px);margin:28px auto;padding-bottom:60px}
+    h2{color:var(--text)}
+    .section{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 10px 30px rgba(11,30,60,0.06);margin-bottom:18px}
+    a{color:var(--royal)}
+    p.lead{color:var(--muted)}
+    ul{padding-left:1.05rem}
+    li{margin:8px 0}
+    /* Chat widget styles */
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:12px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--royal);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:12px 20px;background:linear-gradient(135deg,var(--royal),#1b4a8a);box-shadow:0 12px 30px rgba(0,0,0,0.08);margin-bottom:16px}
+    .toolbar a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.12)}
+    .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:26px 0}
+    .topic-card{background:var(--card);border:1px solid rgba(11,30,60,0.08);border-radius:14px;padding:22px;box-shadow:0 12px 26px rgba(11,30,60,0.05)}
+    .topic-card h2{margin:0 0 10px;font-size:1.16rem;color:var(--royal)}
+    .topic-card p{margin:0;color:var(--text);line-height:1.65}
+    .contact-btn{display:inline-block;background:var(--royal);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
+    .contact-btn:hover{background:#152d54}
+    @media(max-width:720px){.topic-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link site-nav__link--active" href="un-resources.html" aria-current="page">Research</a>
+      <a class="site-nav__link" href="countries.html">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+  <div class="container">
+    <section class="section" id="essentials">
+      <h2>A. UN Research Essentials</h2>
+      <p>Start with authoritative sources: UN bodies, committee websites, and country briefs. This is the foundation for any strong position paper or speech.</p>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Core Sources</h3>
+          <p>UN resolutions, treaty texts, and official committee reports are the best starting point.</p>
+        </div>
+        <div class="topic-card" onclick="window.location.href='#committee-list'" style="cursor:pointer;">
+          <h3>B. Find Your Committee</h3>
+          <p>Jump straight to committee mandates, member states, and research portals for each organ.</p>
+        </div>
+        <div class="topic-card" onclick="window.location.href='#country-research'" style="cursor:pointer;">
+          <h3>C. Research Country Statistics</h3>
+          <p>Open the country research index for diplomatic profiles and national data.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="committee-list">
+      <h2>B. Find Your Committee</h2>
+      <h3>Principal UN Organs</h3>
+      <p><strong>United Nations General Assembly (UNGA)</strong><br>URL: <a href="https://www.un.org/en/ga/" target="_blank">https://www.un.org/en/ga/</a></p>
+      <p><strong>United Nations Security Council (UNSC)</strong><br>URL: <a href="https://main.un.org/securitycouncil/en" target="_blank">https://main.un.org/securitycouncil/en</a></p>
+      <p><strong>Economic and Social Council (ECOSOC)</strong><br>URL: <a href="https://ecosoc.un.org/en" target="_blank">https://ecosoc.un.org/en</a></p>
+      <p><strong>United Nations Human Rights Council (UNHRC)</strong><br>URL: <a href="https://www.ohchr.org/en/hrbodies/hrc/home" target="_blank">https://www.ohchr.org/en/hrbodies/hrc/home</a></p>
+      <p><strong>International Court of Justice (ICJ)</strong><br>URL: <a href="https://www.icj-cij.org" target="_blank">https://www.icj-cij.org</a></p>
+      <p><strong>United Nations Secretariat</strong><br>URL: <a href="https://www.un.org/en/about-us/secretariat" target="_blank">https://www.un.org/en/about-us/secretariat</a></p>
+      <p><strong>Trusteeship Council</strong><br>URL: <a href="https://www.un.org/en/about-us/trusteeship-council" target="_blank">https://www.un.org/en/about-us/trusteeship-council</a></p>
+
+      <div class="subsection">
+        <h3>General Assembly Committees</h3>
+        <p><strong>Disarmament and International Security Committee (DISEC / First Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/first/" target="_blank">https://www.un.org/en/ga/first/</a></p>
+        <p><strong>Economic and Financial Committee (ECOFIN / Second Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/second/" target="_blank">https://www.un.org/en/ga/second/</a></p>
+        <p><strong>Social, Humanitarian and Cultural Committee (SOCHUM / Third Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/third/" target="_blank">https://www.un.org/en/ga/third/</a></p>
+        <p><strong>Special Political and Decolonization Committee (SPECPOL / Fourth Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/fourth/" target="_blank">https://www.un.org/en/ga/fourth/</a></p>
+        <p><strong>Administrative and Budgetary Committee (Fifth Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/fifth/" target="_blank">https://www.un.org/en/ga/fifth/</a></p>
+        <p><strong>Legal Committee (Sixth Committee)</strong><br>URL: <a href="https://www.un.org/en/ga/sixth/" target="_blank">https://www.un.org/en/ga/sixth/</a></p>
+      </div>
+
+      <div class="subsection">
+        <h3>Specialized Agencies and Programmes</h3>
+        <p><strong>World Health Organization (WHO)</strong> — <a href="https://www.who.int" target="_blank">https://www.who.int</a></p>
+        <p><strong>United Nations Children's Fund (UNICEF)</strong> — <a href="https://www.unicef.org" target="_blank">https://www.unicef.org</a></p>
+        <p><strong>United Nations High Commissioner for Refugees (UNHCR)</strong> — <a href="https://www.unhcr.org" target="_blank">https://www.unhcr.org</a></p>
+        <p><strong>United Nations Educational, Scientific and Cultural Organization (UNESCO)</strong> — <a href="https://www.unesco.org" target="_blank">https://www.unesco.org</a></p>
+        <p><strong>Food and Agriculture Organization (FAO)</strong> — <a href="https://www.fao.org" target="_blank">https://www.fao.org</a></p>
+        <p><strong>International Labour Organization (ILO)</strong> — <a href="https://www.ilo.org" target="_blank">https://www.ilo.org</a></p>
+        <p><strong>United Nations Environment Programme (UNEP)</strong> — <a href="https://www.unep.org" target="_blank">https://www.unep.org</a></p>
+        <p><strong>United Nations Office on Drugs and Crime (UNODC)</strong> — <a href="https://www.unodc.org" target="_blank">https://www.unodc.org</a></p>
+      </div>
+
+      <div class="subsection">
+        <h3>ECOSOC Functional Commissions</h3>
+        <p><strong>Commission on the Status of Women (CSW)</strong> — <a href="https://www.unwomen.org/en/csw" target="_blank">https://www.unwomen.org/en/csw</a></p>
+        <p><strong>Commission on Narcotic Drugs (CND)</strong> — <a href="https://www.unodc.org/unodc/en/commissions/CND" target="_blank">https://www.unodc.org/unodc/en/commissions/CND</a></p>
+        <p><strong>Commission on Crime Prevention and Criminal Justice (CCPCJ)</strong> — <a href="https://www.unodc.org/unodc/en/commissions/CCPCJ" target="_blank">https://www.unodc.org/unodc/en/commissions/CCPCJ</a></p>
+      </div>
+
+      <div class="subsection">
+        <h3>Common Crisis Committees Simulated in MUNs</h3>
+        <p><strong>North Atlantic Treaty Organization (NATO)</strong> — <a href="https://www.nato.int" target="_blank">https://www.nato.int</a></p>
+        <p><strong>European Union Council (EU Council)</strong> — <a href="https://www.consilium.europa.eu" target="_blank">https://www.consilium.europa.eu/</a></p>
+        <p><strong>Arab League</strong> — <a href="https://www.lasportal.org" target="_blank">https://www.lasportal.org/</a></p>
+        <p><strong>African Union Peace and Security Council (AU PSC)</strong> — <a href="https://au.int" target="_blank">https://au.int</a></p>
+        <p><strong>Association of Southeast Asian Nations (ASEAN)</strong> — <a href="https://asean.org" target="_blank">https://asean.org</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="country-research">
+      <h2>C. Research Country Statistics</h2>
+      <p>Explore the country research index for diplomatic profiles, national positions, and data you can use in position papers and bloc strategy.</p>
+      <a class="contact-btn" href="countries.html">Open Country Research</a>
+    </section>
+
+    <p style="margin-top:18px"><a href="index.html">Return to Persuado Home</a></p>
+    <p><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+
+    <!-- Chat widget -->
+    <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+    <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+      <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+      <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+    </div>
+
+    <script>
+      (function(){
+        const url = 'https://delegate-helper.lovable.app';
+        const btn = document.getElementById('chatBtn');
+        const modal = document.getElementById('chatModal');
+        const iframe = document.getElementById('chatIframe');
+        const close = document.getElementById('chatClose');
+        btn.addEventListener('click', function(){
+          const w = window.open(url,'delegateHelper','width=420,height=680');
+          if(w && !w.closed){ w.focus(); return; }
+          iframe.src = url;
+          modal.style.display = 'flex';
+          modal.setAttribute('aria-hidden','false');
+        });
+        close.addEventListener('click', function(){
+          modal.style.display='none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src='';
+        });
+        document.addEventListener('click', (e) => {
+          if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden','true');
+            iframe.src = '';
+          }
+        });
+      })();
+    </script>
+
+  </div>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

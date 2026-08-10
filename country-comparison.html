@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Countries | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f4f7fd;--surface:#ffffff;--text:#172033;--muted:#52607d;--royal:#0b1d3c;--accent:#1f4fc0;--accent-dark:#0b2864;--border:rgba(23,32,51,0.08);--shadow:0 18px 50px rgba(11,30,60,0.08);--highlight:#fef3c7}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+    h1,h2,h3,h4,h5,h6{font-family:'Montserrat',sans-serif}
+    .page-header{padding:28px 0 0}
+    .brand-link{display:inline-flex;align-items:center;gap:10px;color:var(--royal);font-size:clamp(1.8rem,3vw,2.3rem);font-weight:800;letter-spacing:.16em;text-decoration:none}
+    .brand-link span{font-size:.95rem;opacity:.75;letter-spacing:.08em;font-weight:700}
+    .page-intro{margin-top:10px;color:var(--muted);max-width:760px}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:12px 20px;background:linear-gradient(135deg,var(--royal),#1b4a8a);box-shadow:0 12px 30px rgba(0,0,0,0.08);margin:18px auto 0;max-width:1180px;border-radius:16px}
+    .toolbar a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.12)}
+    .selector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:24px}
+    .selector-group{display:flex;flex-direction:column;gap:10px}
+    .selector-label{font-weight:700;color:var(--accent-dark);font-size:.95rem}
+    .selector-label.optional{font-size:.9rem;color:var(--muted)}
+    .searchable-dropdown{position:relative}
+    .dropdown-input{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:1rem;transition:border .2s ease, box-shadow .2s ease}
+    .dropdown-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(31,79,192,0.14)}
+    .dropdown-list{position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;max-height:240px;overflow-y:auto;display:none;z-index:100;box-shadow:0 12px 28px rgba(11,30,60,0.12)}
+    .dropdown-list.active{display:block}
+    .dropdown-option{padding:12px 14px;cursor:pointer;color:var(--text);transition:background .15s ease}
+    .dropdown-option:hover{background:rgba(31,79,192,0.08)}
+    .dropdown-option.selected{background:rgba(31,79,192,0.12);font-weight:700}
+    .dropdown-option.used{color:var(--muted);opacity:.75}
+    .action-buttons{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 10px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border:none;border-radius:12px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;font-size:.95rem}
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 14px 28px rgba(31,79,192,0.18)}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 18px 38px rgba(31,79,192,0.24)}
+    .btn-secondary{background:rgba(31,79,192,0.08);color:var(--accent);border:1px solid rgba(31,79,192,0.18)}
+    .btn-secondary:hover{background:rgba(31,79,192,0.14)}
+    .comparison-stage{margin-top:22px}
+    .comparison-table-wrapper{overflow-x:auto;border-radius:20px;box-shadow:var(--shadow);border:1px solid var(--border)}
+    .comparison-table{width:100%;border-collapse:collapse;background:var(--surface)}
+    .comparison-table th{background:linear-gradient(135deg,var(--royal),#1b4a8a);color:white;padding:18px 12px;text-align:left;font-weight:700;font-size:.95rem}
+    .comparison-table td{padding:16px 12px;border-bottom:1px solid var(--border);font-size:.95rem}
+    .comparison-table tr:last-child td{border-bottom:none}
+    .comparison-table tbody tr:hover{background:rgba(31,79,192,0.04)}
+    .metric-label{font-weight:700;color:var(--accent-dark);min-width:140px}
+    .value-highlighted{background:var(--highlight);font-weight:700;padding:4px 8px;border-radius:8px}
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:12px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--royal);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+    @media(max-width:720px){
+      .page-header{padding:20px 0 0}
+      .toolbar{justify-content:flex-start}
+      .toolbar a{width:100%;text-align:center}
+      .action-buttons{flex-direction:column;gap:10px}
+      .btn{width:100%}
+      .comparison-table{font-size:.9rem}
+      .comparison-table th,.comparison-table td{padding:12px 10px}
+      .metric-label{min-width:100px;word-break:break-word}
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link site-nav__link--active" href="countries.html" aria-current="page">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="hero-panel">
+      <div>
+        <span class="eyebrow">Country comparison</span>
+        <h2>Build a fast side-by-side view of your shortlist.</h2>
+        <p>Select up to four countries and compare population, GDP, income, HDI, and core facts in one place.</p>
+      </div>
+      <div class="hero-badges">
+        <span class="stat-pill">Up to 4 countries</span>
+        <span class="stat-pill">Instant search</span>
+        <span class="stat-pill">Clear highlights</span>
+      </div>
+    </section>
+
+    <section class="surface-card" style="margin-top:24px;">
+      <div class="selector-grid">
+        <div class="selector-group">
+          <label class="selector-label">Country 1</label>
+          <div class="searchable-dropdown">
+            <input type="text" class="dropdown-input" id="search1" placeholder="Search country..." aria-label="Search for country 1">
+            <div class="dropdown-list" id="list1"></div>
+          </div>
+        </div>
+
+        <div class="selector-group">
+          <label class="selector-label">Country 2</label>
+          <div class="searchable-dropdown">
+            <input type="text" class="dropdown-input" id="search2" placeholder="Search country..." aria-label="Search for country 2">
+            <div class="dropdown-list" id="list2"></div>
+          </div>
+        </div>
+
+        <div class="selector-group">
+          <label class="selector-label optional">(Optional) Country 3</label>
+          <div class="searchable-dropdown">
+            <input type="text" class="dropdown-input" id="search3" placeholder="Search country..." aria-label="Search for country 3">
+            <div class="dropdown-list" id="list3"></div>
+          </div>
+        </div>
+
+        <div class="selector-group">
+          <label class="selector-label optional">(Optional) Country 4</label>
+          <div class="searchable-dropdown">
+            <input type="text" class="dropdown-input" id="search4" placeholder="Search country..." aria-label="Search for country 4">
+            <div class="dropdown-list" id="list4"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="generateComparison()">Generate comparison</button>
+        <button class="btn btn-secondary" onclick="swapCountries()">Swap countries</button>
+        <button class="btn btn-secondary" onclick="clearComparison()">Clear all</button>
+      </div>
+
+      <div id="selectionSummary" class="summary-card"></div>
+      <div id="comparisonContainer" class="comparison-stage"></div>
+    </section>
+  </main>
+
+  <!-- Chat widget -->
+  <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+  <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+    <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+    <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    /* Country data is loaded from data/countries.json at runtime. */
+    /*
+      {
+        capital: "Washington, D.C.",
+        population: 338289857,
+        gdp: 27360758000000,
+        gdpPerCapita: 80754,
+        currency: "USD",
+        officialLanguages: ["English"],
+        subregion: "Northern America",
+        hdi: 0.921,
+        name: "United States",
+        slug: "united-states",
+        flag: "🇺🇸"
+      },
+      {
+        capital: "Beijing",
+        population: 1425887337,
+        gdp: 17734119000000,
+        gdpPerCapita: 12456,
+        currency: "CNY",
+        officialLanguages: ["Mandarin Chinese"],
+        subregion: "Eastern Asia",
+        hdi: 0.796,
+        name: "China",
+        slug: "china",
+        flag: "🇨🇳"
+      },
+      {
+        capital: "Moscow",
+        population: 144713314,
+        gdp: 1839226000000,
+        gdpPerCapita: 12711,
+        currency: "RUB",
+        officialLanguages: ["Russian"],
+        subregion: "Eastern Europe",
+        hdi: 0.822,
+        name: "Russia",
+        slug: "russia",
+        flag: "🇷🇺"
+      },
+      {
+        capital: "London",
+        population: 68108039,
+        gdp: 3332055000000,
+        gdpPerCapita: 48949,
+        currency: "GBP",
+        officialLanguages: ["English"],
+        subregion: "Northern Europe",
+        hdi: 0.929,
+        name: "United Kingdom",
+        slug: "united-kingdom",
+        flag: "🇬🇧"
+      },
+      {
+        capital: "Paris",
+        population: 68014000,
+        gdp: 2780043000000,
+        gdpPerCapita: 40884,
+        currency: "EUR",
+        officialLanguages: ["French"],
+        subregion: "Western Europe",
+        hdi: 0.910,
+        name: "France",
+        slug: "france",
+        flag: "🇫🇷"
+      },
+      {
+        capital: "New Delhi",
+        population: 1428627663,
+        gdp: 3736882000000,
+        gdpPerCapita: 2617,
+        currency: "INR",
+        officialLanguages: ["Hindi", "English"],
+        subregion: "Southern Asia",
+        hdi: 0.644,
+        name: "India",
+        slug: "india",
+        flag: "🇮🇳"
+      },
+      {
+        capital: "Berlin",
+        population: 84520881,
+        gdp: 4080110000000,
+        gdpPerCapita: 48306,
+        currency: "EUR",
+        officialLanguages: ["German"],
+        subregion: "Western Europe",
+        hdi: 0.920,
+        name: "Germany",
+        slug: "germany",
+        flag: "🇩🇪"
+      },
+      {
+        capital: "Tokyo",
+        population: 123294513,
+        gdp: 4231141000000,
+        gdpPerCapita: 34304,
+        currency: "JPY",
+        officialLanguages: ["Japanese"],
+        subregion: "Eastern Asia",
+        hdi: 0.920,
+        name: "Japan",
+        slug: "japan",
+        flag: "🇯🇵"
+      },
+      {
+        capital: "Brasília",
+        population: 215313498,
+        gdp: 1955857000000,
+        gdpPerCapita: 9085,
+        currency: "BRL",
+        officialLanguages: ["Portuguese"],
+        subregion: "South America",
+        hdi: 0.754,
+        name: "Brazil",
+        slug: "brazil",
+        flag: "🇧🇷"
+      },
+      {
+        capital: "Pretoria",
+        population: 60142978,
+        gdp: 405389000000,
+        gdpPerCapita: 6745,
+        currency: "ZAR",
+        officialLanguages: ["Zulu", "Xhosa", "Afrikaans", "English"],
+        subregion: "Southern Africa",
+        hdi: 0.714,
+        name: "South Africa",
+        slug: "south-africa",
+        flag: "🇿🇦"
+      },
+      {
+        capital: "Riyadh",
+        population: 37408920,
+        gdp: 1102200000000,
+        gdpPerCapita: 29464,
+        currency: "SAR",
+        officialLanguages: ["Arabic"],
+        subregion: "Western Asia",
+        hdi: 0.876,
+        name: "Saudi Arabia",
+        slug: "saudi-arabia",
+        flag: "🇸🇦"
+      },
+      {
+        capital: "Jakarta",
+        population: 275501339,
+        gdp: 1319100000000,
+        gdpPerCapita: 4790,
+        currency: "IDR",
+        officialLanguages: ["Indonesian"],
+        subregion: "Southeast Asia",
+        hdi: 0.714,
+        name: "Indonesia",
+        slug: "indonesia",
+        flag: "🇮🇩"
+      },
+      {
+        capital: "Ankara",
+        population: 86749000,
+        gdp: 905873000000,
+        gdpPerCapita: 10442,
+        currency: "TRY",
+        officialLanguages: ["Turkish"],
+        subregion: "Western Asia",
+        hdi: 0.821,
+        name: "Turkey",
+        slug: "turkey",
+        flag: "🇹🇷"
+      },
+      {
+        capital: "Mexico City",
+        population: 128932753,
+        gdp: 1206928000000,
+        gdpPerCapita: 9358,
+        currency: "MXN",
+        officialLanguages: ["Spanish"],
+        subregion: "Central America",
+        hdi: 0.765,
+        name: "Mexico",
+        slug: "mexico",
+        flag: "🇲🇽"
+      },
+      {
+        capital: "Rome",
+        population: 56840000,
+        gdp: 2010270000000,
+        gdpPerCapita: 35360,
+        currency: "EUR",
+        officialLanguages: ["Italian"],
+        subregion: "Southern Europe",
+        hdi: 0.895,
+        name: "Italy",
+        slug: "italy",
+        flag: "🇮🇹"
+      },
+      {
+        capital: "Ottawa",
+        population: 39858480,
+        gdp: 2117000000000,
+        gdpPerCapita: 53104,
+        currency: "CAD",
+        officialLanguages: ["English", "French"],
+        subregion: "Northern America",
+        hdi: 0.929,
+        name: "Canada",
+        slug: "canada",
+        flag: "🇨🇦"
+      },
+      {
+        capital: "Canberra",
+        population: 26433000,
+        gdp: 1754000000000,
+        gdpPerCapita: 66351,
+        currency: "AUD",
+        officialLanguages: ["English"],
+        subregion: "Oceania",
+        hdi: 0.951,
+        name: "Australia",
+        slug: "australia",
+        flag: "🇦🇺"
+      },
+      {
+        capital: "Seoul",
+        population: 51780579,
+        gdp: 1642381000000,
+        gdpPerCapita: 31721,
+        currency: "KRW",
+        officialLanguages: ["Korean"],
+        subregion: "Eastern Asia",
+        hdi: 0.929,
+        name: "South Korea",
+        slug: "south-korea",
+        flag: "🇰🇷"
+      },
+      {
+        capital: "Buenos Aires",
+        population: 46044703,
+        gdp: 416796000000,
+        gdpPerCapita: 9047,
+        currency: "ARS",
+        officialLanguages: ["Spanish"],
+        subregion: "South America",
+        hdi: 0.863,
+        name: "Argentina",
+        slug: "argentina",
+        flag: "🇦🇷"
+      },
+      {
+        capital: "Islamabad",
+        population: 240485658,
+        gdp: 370527000000,
+        gdpPerCapita: 1541,
+        currency: "PKR",
+        officialLanguages: ["Urdu", "English"],
+        subregion: "Southern Asia",
+        hdi: 0.540,
+        name: "Pakistan",
+        slug: "pakistan",
+        flag: "🇵🇰"
+      },
+      {
+        capital: "Jerusalem",
+        population: 9656520,
+        gdp: 522159000000,
+        gdpPerCapita: 54092,
+        currency: "ILS",
+        officialLanguages: ["Hebrew"],
+        subregion: "Western Asia",
+        hdi: 0.919,
+        name: "Israel",
+        slug: "israel",
+        flag: "🇮🇱"
+      },
+      {
+        capital: "Tehran",
+        population: 91528570,
+        gdp: 367906000000,
+        gdpPerCapita: 4019,
+        currency: "IRR",
+        officialLanguages: ["Persian"],
+        subregion: "Western Asia",
+        hdi: 0.789,
+        name: "Iran",
+        slug: "iran",
+        flag: "🇮🇷"
+      },
+      {
+        capital: "Cairo",
+        population: 104124440,
+        gdp: 476753000000,
+        gdpPerCapita: 4579,
+        currency: "EGP",
+        officialLanguages: ["Arabic"],
+        subregion: "Northern Africa",
+        hdi: 0.731,
+        name: "Egypt",
+        slug: "egypt",
+        flag: "🇪🇬"
+      },
+      {
+        capital: "Abuja",
+        population: 223804632,
+        gdp: 477546000000,
+        gdpPerCapita: 2133,
+        currency: "NGN",
+        officialLanguages: ["English"],
+        subregion: "Western Africa",
+        hdi: 0.540,
+        name: "Nigeria",
+        slug: "nigeria",
+        flag: "🇳🇬"
+      },
+      {
+        capital: "Nairobi",
+        population: 54027487,
+        gdp: 119299000000,
+        gdpPerCapita: 2206,
+        currency: "KES",
+        officialLanguages: ["Swahili", "English"],
+        subregion: "Eastern Africa",
+        hdi: 0.587,
+        name: "Kenya",
+        slug: "kenya",
+        flag: "🇰🇪"
+      },
+      {
+        capital: "Addis Ababa",
+        population: 126527060,
+        gdp: 116432000000,
+        gdpPerCapita: 921,
+        currency: "ETB",
+        officialLanguages: ["Amharic"],
+        subregion: "Eastern Africa",
+        hdi: 0.492,
+        name: "Ethiopia",
+        slug: "ethiopia",
+        flag: "🇪🇹"
+      },
+      {
+        capital: "Algiers",
+        population: 44903225,
+        gdp: 180007000000,
+        gdpPerCapita: 4010,
+        currency: "DZD",
+        officialLanguages: ["Arabic"],
+        subregion: "Northern Africa",
+        hdi: 0.759,
+        name: "Algeria",
+        slug: "algeria",
+        flag: "🇩🇿"
+      },
+      {
+        capital: "Rabat",
+        population: 37344795,
+        gdp: 147887000000,
+        gdpPerCapita: 3963,
+        currency: "MAD",
+        officialLanguages: ["Arabic", "Amazigh"],
+        subregion: "Northern Africa",
+        hdi: 0.758,
+        name: "Morocco",
+        slug: "morocco",
+        flag: "🇲🇦"
+      },
+      {
+        capital: "Abu Dhabi",
+        population: 9890400,
+        gdp: 415600000000,
+        gdpPerCapita: 42013,
+        currency: "AED",
+        officialLanguages: ["Arabic"],
+        subregion: "Western Asia",
+        hdi: 0.910,
+        name: "United Arab Emirates",
+        slug: "united-arab-emirates",
+        flag: "🇦🇪"
+      },
+      {
+        capital: "Doha",
+        population: 2930528,
+        gdp: 176522000000,
+        gdpPerCapita: 60255,
+        currency: "QAR",
+        officialLanguages: ["Arabic"],
+        subregion: "Western Asia",
+        hdi: 0.857,
+        name: "Qatar",
+        slug: "qatar",
+        flag: "🇶🇦"
+      },
+      {
+        capital: "Kyiv",
+        population: 37662000,
+        gdp: 172075000000,
+        gdpPerCapita: 4569,
+        currency: "UAH",
+        officialLanguages: ["Ukrainian"],
+        subregion: "Eastern Europe",
+        hdi: 0.796,
+        name: "Ukraine",
+        slug: "ukraine",
+        flag: "🇺🇦"
+      },
+      {
+        capital: "Warsaw",
+        population: 37656000,
+        gdp: 688255000000,
+        gdpPerCapita: 18282,
+        currency: "PLN",
+        officialLanguages: ["Polish"],
+        subregion: "Eastern Europe",
+        hdi: 0.880,
+        name: "Poland",
+        slug: "poland",
+        flag: "🇵🇱"
+      },
+      {
+        capital: "Amsterdam",
+        population: 17590672,
+        gdp: 1190000000000,
+        gdpPerCapita: 67616,
+        currency: "EUR",
+        officialLanguages: ["Dutch"],
+        subregion: "Western Europe",
+        hdi: 0.944,
+        name: "Netherlands",
+        slug: "netherlands",
+        flag: "🇳🇱"
+      },
+      {
+        capital: "Brussels",
+        population: 11590000,
+        gdp: 680290000000,
+        gdpPerCapita: 58679,
+        currency: "EUR",
+        officialLanguages: ["Dutch", "French", "German"],
+        subregion: "Western Europe",
+        hdi: 0.931,
+        name: "Belgium",
+        slug: "belgium",
+        flag: "🇧🇪"
+      },
+      {
+        capital: "Madrid",
+        population: 48080134,
+        gdp: 1394276000000,
+        gdpPerCapita: 29008,
+        currency: "EUR",
+        officialLanguages: ["Spanish"],
+        subregion: "Southern Europe",
+        hdi: 0.905,
+        name: "Spain",
+        slug: "spain",
+        flag: "🇪🇸"
+      },
+      {
+        capital: "Lisbon",
+        population: 10467166,
+        gdp: 290040000000,
+        gdpPerCapita: 27706,
+        currency: "EUR",
+        officialLanguages: ["Portuguese"],
+        subregion: "Southern Europe",
+        hdi: 0.887,
+        name: "Portugal",
+        slug: "portugal",
+        flag: "🇵🇹"
+      },
+      {
+        capital: "Stockholm",
+        population: 10549347,
+        gdp: 602140000000,
+        gdpPerCapita: 57091,
+        currency: "SEK",
+        officialLanguages: ["Swedish"],
+        subregion: "Northern Europe",
+        hdi: 0.954,
+        name: "Sweden",
+        slug: "sweden",
+        flag: "🇸🇪"
+      },
+      {
+        capital: "Oslo",
+        population: 5596021,
+        gdp: 598047000000,
+        gdpPerCapita: 106826,
+        currency: "NOK",
+        officialLanguages: ["Norwegian"],
+        subregion: "Northern Europe",
+        hdi: 0.961,
+        name: "Norway",
+        slug: "norway",
+        flag: "🇳🇴"
+      },
+      {
+        capital: "Helsinki",
+        population: 5563970,
+        gdp: 380160000000,
+        gdpPerCapita: 68319,
+        currency: "EUR",
+        officialLanguages: ["Finnish", "Swedish"],
+        subregion: "Northern Europe",
+        hdi: 0.938,
+        name: "Finland",
+        slug: "finland",
+        flag: "🇫🇮"
+      },
+      {
+        capital: "Copenhagen",
+        population: 5945000,
+        gdp: 406160000000,
+        gdpPerCapita: 68326,
+        currency: "DKK",
+        officialLanguages: ["Danish"],
+        subregion: "Northern Europe",
+        hdi: 0.948,
+        name: "Denmark",
+        slug: "denmark",
+        flag: "🇩🇰"
+      },
+      {
+        capital: "Bern",
+        population: 8776000,
+        gdp: 827060000000,
+        gdpPerCapita: 94176,
+        currency: "CHF",
+        officialLanguages: ["German", "French", "Italian", "Romansh"],
+        subregion: "Western Europe",
+        hdi: 0.962,
+        name: "Switzerland",
+        slug: "switzerland",
+        flag: "🇨🇭"
+      },
+      {
+        capital: "Vienna",
+        population: 9042000,
+        gdp: 540640000000,
+        gdpPerCapita: 59791,
+        currency: "EUR",
+        officialLanguages: ["German"],
+        subregion: "Western Europe",
+        hdi: 0.922,
+        name: "Austria",
+        slug: "austria",
+        flag: "🇦🇹"
+      },
+      {
+        capital: "Singapore",
+        population: 5917600,
+        gdp: 598360000000,
+        gdpPerCapita: 101129,
+        currency: "SGD",
+        officialLanguages: ["Malay", "Chinese", "Tamil", "English"],
+        subregion: "Southeast Asia",
+        hdi: 0.939,
+        name: "Singapore",
+        slug: "singapore",
+        flag: "🇸🇬"
+      },
+      {
+        capital: "Kuala Lumpur",
+        population: 34332267,
+        gdp: 514761000000,
+        gdpPerCapita: 14992,
+        currency: "MYR",
+        officialLanguages: ["Malay"],
+        subregion: "Southeast Asia",
+        hdi: 0.803,
+        name: "Malaysia",
+        slug: "malaysia",
+        flag: "🇲🇾"
+      },
+      {
+        capital: "Bangkok",
+        population: 71801915,
+        gdp: 505557000000,
+        gdpPerCapita: 7040,
+        currency: "THB",
+        officialLanguages: ["Thai"],
+        subregion: "Southeast Asia",
+        hdi: 0.816,
+        name: "Thailand",
+        slug: "thailand",
+        flag: "🇹🇭"
+      },
+      {
+        capital: "Hanoi",
+        population: 98186856,
+        gdp: 429244000000,
+        gdpPerCapita: 4371,
+        currency: "VND",
+        officialLanguages: ["Vietnamese"],
+        subregion: "Southeast Asia",
+        hdi: 0.761,
+        name: "Vietnam",
+        slug: "vietnam",
+        flag: "🇻🇳"
+      },
+      {
+        capital: "Manila",
+        population: 119106440,
+        gdp: 581520000000,
+        gdpPerCapita: 4885,
+        currency: "PHP",
+        officialLanguages: ["Filipino", "English"],
+        subregion: "Southeast Asia",
+        hdi: 0.718,
+        name: "Philippines",
+        slug: "philippines",
+        flag: "🇵🇭"
+      },
+      {
+        capital: "Dhaka",
+        population: 170065850,
+        gdp: 448788000000,
+        gdpPerCapita: 2639,
+        currency: "BDT",
+        officialLanguages: ["Bengali"],
+        subregion: "Southern Asia",
+        hdi: 0.661,
+        name: "Bangladesh",
+        slug: "bangladesh",
+        flag: "🇧🇩"
+      },
+      {
+        capital: "Wellington",
+        population: 5228100,
+        gdp: 265435000000,
+        gdpPerCapita: 50804,
+        currency: "NZD",
+        officialLanguages: ["English", "Maori"],
+        subregion: "Oceania",
+        hdi: 0.939,
+        name: "New Zealand",
+        slug: "new-zealand",
+        flag: "🇳🇿"
+      },
+      {
+        capital: "Athens",
+        population: 10640801,
+        gdp: 219590000000,
+        gdpPerCapita: 20638,
+        currency: "EUR",
+        officialLanguages: ["Greek"],
+        subregion: "Southern Europe",
+        hdi: 0.887,
+        name: "Greece",
+        slug: "greece",
+        flag: "🇬🇷"
+      }
+    ];
+
+    */
+
+    const COUNTRY_SLUG_ALIASES = {
+      'russia': 'russian-federation',
+      'united-states': 'united-states-of-america',
+      'united-kingdom': 'united-kingdom-of-great-britain-and-northern-ireland',
+      'turkey': 'turkiye',
+      'vietnam': 'viet-nam',
+      'korea-north': 'democratic-people-s-republic-of-korea',
+      'korea-south': 'republic-of-korea',
+      'venezuela': 'venezuela-bolivarian-republic-of',
+      'syria': 'syrian-arab-republic',
+      'tanzania': 'united-republic-of-tanzania',
+      'moldova': 'republic-of-moldova',
+      'gambia': 'the-gambia'
+    };
+
+    let countryDataset = [];
+
+    function slugFromCountryName(name) {
+      return String(name || '')
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, ' ')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    function countryCodeToFlag(code) {
+      if (!code) return '🌐';
+      const normalized = String(code).toUpperCase();
+      const first = normalized.charCodeAt(0);
+      const second = normalized.charCodeAt(1);
+      if (first < 65 || first > 90 || second < 65 || second > 90) return '🌐';
+      return String.fromCodePoint(first + 0x1F1A5, second + 0x1F1A5);
+    }
+
+    function normalizeCountryRecord(record) {
+      const name = record['Country'] || record.name || '';
+      const languages = Array.isArray(record.officialLanguages)
+        ? record.officialLanguages
+        : String(record['Languages'] || record.languages || '')
+            .split(',')
+            .map(value => value.trim())
+            .filter(Boolean);
+
+      return {
+        capital: record['Capital'] || record.capital || '',
+        population: Number(record['Population 2026'] ?? record.population) || 0,
+        gdp: Number(record['GDP USD B'] ?? record.gdp) || 0,
+        gdpPerCapita: Number(record['GDP per Capita'] ?? record.gdpPerCapita) || 0,
+        currency: record['Currency'] || record.currency || '',
+        officialLanguages: languages,
+        subregion: record['Continent'] || record.subregion || '',
+        hdi: Number(record['HDI'] ?? record.hdi) || 0,
+        name,
+        slug: slugFromCountryName(name),
+        flag: record['ISO-2'] ? countryCodeToFlag(record['ISO-2']) : (record.flag || '🌐')
+      };
+    }
+
+    async function loadCountryDataset() {
+      try {
+        const response = await fetch('data/countries.json');
+        if (!response.ok) throw new Error('Failed to load country dataset');
+        const json = await response.json();
+        const rows = Array.isArray(json.Sheet1) ? json.Sheet1 : Array.isArray(json) ? json : [];
+        countryDataset = rows.map(normalizeCountryRecord).filter(country => country.name);
+      } catch (error) {
+        console.error(error);
+        countryDataset = [];
+      }
+    }
+
+    const selectedCountries = [null, null, null, null];
+    const metrics = ['name', 'capital', 'population', 'gdp', 'gdpPerCapita', 'currency', 'officialLanguages', 'subregion', 'hdi'];
+
+    function initDropdowns() {
+      for (let i = 1; i <= 4; i++) {
+        const searchInput = document.getElementById(`search${i}`);
+        const dropdownList = document.getElementById(`list${i}`);
+
+        searchInput.addEventListener('focus', () => renderCountryList(i, searchInput.value));
+        searchInput.addEventListener('input', (e) => renderCountryList(i, e.target.value));
+        searchInput.addEventListener('blur', () => {
+          setTimeout(() => dropdownList.classList.remove('active'), 150);
+        });
+      }
+
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest('.searchable-dropdown')) {
+          closeDropdowns();
+        }
+      });
+    }
+
+    function closeDropdowns() {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`list${i}`).classList.remove('active');
+      }
+    }
+
+    function renderCountryList(index, query) {
+      const dropdownList = document.getElementById(`list${index}`);
+      const filtered = countryDataset.filter(c => c.name.toLowerCase().includes((query || '').toLowerCase()))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      dropdownList.innerHTML = filtered.map(country => {
+        const activeSelection = selectedCountries[index - 1]?.slug === country.slug;
+        const usedElsewhere = selectedCountries.some((entry, entryIndex) => entryIndex !== index - 1 && entry?.slug === country.slug);
+        const optionClass = activeSelection ? 'selected' : (usedElsewhere ? 'used' : '');
+        const disabledAttr = usedElsewhere && !activeSelection ? 'aria-disabled="true"' : '';
+        const onclick = usedElsewhere && !activeSelection ? '' : `onclick="selectCountry(${index}, '${country.slug}')"`;
+        const label = usedElsewhere && !activeSelection ? `${country.name} · already selected` : country.name;
+        return `<div class="dropdown-option ${optionClass}" ${disabledAttr} ${onclick}>${country.flag} ${label}</div>`;
+      }).join('');
+
+      dropdownList.classList.add('active');
+    }
+
+    function findCountryBySlug(slug) {
+      const normalizedValue = String(slug || '').toLowerCase();
+      const candidateSlugs = [normalizedValue];
+      if (COUNTRY_SLUG_ALIASES[normalizedValue]) {
+        candidateSlugs.push(COUNTRY_SLUG_ALIASES[normalizedValue]);
+      }
+      return countryDataset.find(country => candidateSlugs.includes(country.slug));
+    }
+
+    function selectCountry(index, slug) {
+      const country = findCountryBySlug(slug);
+      if (!country) return;
+
+      selectedCountries[index - 1] = country;
+      const searchInput = document.getElementById(`search${index}`);
+      searchInput.value = country.name;
+      document.getElementById(`list${index}`).classList.remove('active');
+      updateSelectionSummary();
+      generateComparison();
+    }
+
+    function updateSelectionSummary() {
+      const summary = document.getElementById('selectionSummary');
+      const selected = selectedCountries.filter(Boolean);
+
+      if (!selected.length) {
+        summary.innerHTML = '<div class="summary-copy">Choose at least two countries to begin the side-by-side comparison.</div>';
+        return;
+      }
+
+      const chips = selected.map(country => `<span class="summary-chip">${country.flag} ${country.name}</span>`).join('');
+      summary.innerHTML = `<div class="summary-copy">Selected countries</div><div class="chip-row">${chips}</div>`;
+    }
+
+    function createEmptyState(message) {
+      document.getElementById('comparisonContainer').innerHTML = `<div class="empty-state">${message}</div>`;
+    }
+
+    function formatPopulation(val) {
+      if (val >= 1e9) return (val / 1e9).toFixed(1) + ' Billion';
+      if (val >= 1e6) return (val / 1e6).toFixed(1) + ' Million';
+      return val.toLocaleString();
+    }
+
+    function formatGDP(val) {
+      if (val >= 1e12) return '$' + (val / 1e12).toFixed(2) + ' Trillion';
+      if (val >= 1e9) return '$' + (val / 1e9).toFixed(2) + ' Billion';
+      return '$' + (val / 1e6).toFixed(2) + ' Million';
+    }
+
+    function formatGDPPerCapita(val) {
+      return '$' + val.toLocaleString();
+    }
+
+    function formatHDI(val) {
+      return val.toFixed(3);
+    }
+
+    function getMetricValue(country, metric) {
+      if (!country) return '-';
+      if (metric === 'name') return `${country.flag} ${country.name}`;
+      if (metric === 'population') return formatPopulation(country.population);
+      if (metric === 'gdp') return formatGDP(country.gdp);
+      if (metric === 'gdpPerCapita') return formatGDPPerCapita(country.gdpPerCapita);
+      if (metric === 'hdi') return formatHDI(country.hdi);
+      if (metric === 'officialLanguages') return country.officialLanguages.join(', ');
+      return country[metric] || '-';
+    }
+
+    function highlightMax(values, metric) {
+      if (['name', 'capital', 'currency', 'officialLanguages', 'subregion'].includes(metric)) return [];
+      const numValues = values.map(c => c ? c[metric] : -Infinity);
+      const maxIdx = numValues.indexOf(Math.max(...numValues.filter(v => v !== -Infinity)));
+      return numValues.map((_, i) => i === maxIdx ? 'highlight' : '');
+    }
+
+    function generateComparison() {
+      const comparison = selectedCountries.filter(c => c !== null);
+      if (comparison.length < 2) {
+        createEmptyState('Select at least two countries to build a comparison.');
+        return;
+      }
+
+      let html = '<div class="comparison-table-wrapper"><table class="comparison-table"><thead><tr><th>Metric</th>';
+      comparison.forEach(c => html += `<th>${c.flag} ${c.name}</th>`);
+      html += '</tr></thead><tbody>';
+
+      metrics.forEach(metric => {
+        const highlights = highlightMax(comparison, metric);
+        const metricLabel = metric.charAt(0).toUpperCase() + metric.slice(1).replace(/([A-Z])/g, ' $1');
+        html += `<tr><td class="metric-label">${metricLabel}</td>`;
+        comparison.forEach((country, i) => {
+          const value = getMetricValue(country, metric);
+          html += `<td ${highlights[i] === 'highlight' ? 'class="value-highlighted"' : ''}>${value}</td>`;
+        });
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      document.getElementById('comparisonContainer').innerHTML = html;
+    }
+
+    function swapCountries() {
+      if (!selectedCountries[0] || !selectedCountries[1]) return;
+
+      [selectedCountries[0], selectedCountries[1]] = [selectedCountries[1], selectedCountries[0]];
+
+      document.getElementById('search1').value = selectedCountries[0]?.name || '';
+      document.getElementById('search2').value = selectedCountries[1]?.name || '';
+      updateSelectionSummary();
+      generateComparison();
+    }
+
+    function clearComparison() {
+      selectedCountries.fill(null);
+      document.getElementById('search1').value = '';
+      document.getElementById('search2').value = '';
+      document.getElementById('search3').value = '';
+      document.getElementById('search4').value = '';
+      updateSelectionSummary();
+      createEmptyState('Select countries from the dropdowns to start comparing.');
+    }
+
+    // Chat widget
+    (function(){
+      const url = 'https://delegate-helper.lovable.app';
+      const btn = document.getElementById('chatBtn');
+      const modal = document.getElementById('chatModal');
+      const iframe = document.getElementById('chatIframe');
+      const close = document.getElementById('chatClose');
+      btn.addEventListener('click', function(){
+        const w = window.open(url, 'delegateHelper', 'width=420,height=680');
+        if (w && !w.closed) { w.focus(); return; }
+        iframe.src = url;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+      });
+      close.addEventListener('click', function(){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        iframe.src = '';
+      });
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')) {
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden', 'true');
+          iframe.src = '';
+        }
+      });
+    })();
+
+    initDropdowns();
+    clearComparison();
+    loadCountryDataset();
+  */
+  </script>
+  <script src="js/country-comparison.js"></script>
+</body>
+</html>

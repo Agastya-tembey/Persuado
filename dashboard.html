@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Persuado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="un-resources.html">Research</a>
+        <a class="site-nav__link" href="countries.html">Countries</a>
+        <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+        <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+        <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+        <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+        <a class="site-nav__link" href="glossary.html">Glossary</a>
+        <a class="site-nav__link" href="about.html">About</a>
+      </div>
+      <div class="site-nav__actions"><div id="navAuthLinks"></div>
+        <button id="logoutButton" class="button button-secondary">Logout</button>
+      </div>
+    </nav>
+    <div class="dashboard-hero">
+      <h1>Welcome back, <span id="displayName">Delegate</span></h1>
+      <p>Your personal Persuado dashboard is where notes, bookmarks, committee preferences, and progress tracking meet.</p>
+    </div>
+  </header>
+
+  <main class="page-container">
+    <section class="section">
+      <div id="dashboardState" class="state-card state-loading" role="status">Loading your dashboard…</div>
+      <div class="profile-summary card">
+        <h2>Your account</h2>
+        <p><strong>Email:</strong> <span id="userEmail">loading...</span></p>
+        <p><strong>Account type:</strong> Registered free account</p>
+      </div>
+    </section>
+
+    <section class="section secondary-section">
+      <div class="section-header">
+        <h2>Your Persuado workspace</h2>
+        <p>Access your saved preparation tools, sync progress across devices, and revisit your work anytime.</p>
+      </div>
+      <div class="dashboard-grid">
+        <article class="dashboard-card">
+          <h3>Research Notes</h3>
+          <p>Saved notes help you keep track of your research, arguments, and country positions.</p>
+        </article>
+        <article class="dashboard-card">
+          <h3>Workspace Hub</h3>
+          <p>Open your workspace and manage your saved resolutions, speeches, and committee plans.</p>
+          <a class="button button-secondary" href="workspaces.html" style="margin-top:12px;display:inline-block;">Go to Workspaces</a>
+        </article>
+        <article class="dashboard-card">
+          <h3>Bookmarked Countries</h3>
+          <p>Review the countries you are researching and manage collections in one place.</p>
+        </article>
+        <article class="dashboard-card">
+          <h3>Committee Preferences</h3>
+          <p>Save your favorite committees and track preparation progress for each organ.</p>
+        </article>
+        <article class="dashboard-card">
+          <h3>Preparation Tracker</h3>
+          <p>Monitor progress across research, speeches, resolutions, and final review stages.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="centered-block card">
+        <h2>Powerful features for registered users</h2>
+        <p>Guests can browse core content, while free accounts gain access to saved notes, bookmarks, dashboard tools, and synced access across devices.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Signed in securely with Firebase Authentication.</p>
+  </footer>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Country Analysis | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f7f9fc;--card:#ffffff;--text:#172033;--muted:#52607d;--royal:#0b1d3c}
+    html,body{height:100%}
+    body{font-family:Inter, system-ui, sans-serif;background:var(--bg);color:var(--text);margin:0}
+    header{background:linear-gradient(90deg,rgba(11,29,60,0.95),rgba(27,74,138,0.92));color:#fff;padding:36px 16px;text-align:center}
+    header h1{font-family:Montserrat, sans-serif;margin:0;font-size:28px;letter-spacing:1px}
+    header p{margin:8px 0 0;color:rgba(255,255,255,0.85)}
+    .container{width:min(92%,1180px);margin:28px auto;padding-bottom:80px}
+    .lead{color:var(--muted);max-width:920px;margin:8px auto 20px;text-align:center}
+    .alphabet{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px}
+    .alphabet a{display:inline-block;padding:8px 10px;background:var(--card);border:1px solid rgba(11,30,60,0.06);border-radius:8px;color:var(--royal);text-decoration:none;font-weight:700}
+    details{background:var(--card);padding:14px;border-radius:10px;margin-bottom:10px;border:1px solid rgba(11,30,60,0.06)}
+    summary{font-family:Montserrat, sans-serif;font-weight:700;cursor:pointer;color:var(--royal);outline:none}
+    .country-list{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+    .country-list a{display:block;padding:8px 10px;background:#fff;border-radius:8px;border:1px solid rgba(11,30,60,0.04);text-decoration:none;color:var(--text)}
+    .button{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;margin-top:14px;background:var(--royal);color:#fff;border-radius:10px;border:none;text-decoration:none;font-weight:700;box-shadow:0 10px 25px rgba(11,30,60,0.12);transition:transform .15s ease,background .15s ease}
+    .button:hover{transform:translateY(-1px);background:#152d54}
+    .toolbar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:12px 20px;background:linear-gradient(135deg,var(--royal),#1b4a8a);box-shadow:0 12px 30px rgba(0,0,0,0.08);margin-bottom:16px}
+    .toolbar a{color:white;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.12)}
+    .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin:26px 0}
+    .topic-card{background:var(--card);border:1px solid rgba(11,30,60,0.08);border-radius:14px;padding:22px;box-shadow:0 12px 26px rgba(11,30,60,0.05)}
+    .topic-card h2{margin:0 0 10px;font-size:1.16rem;color:var(--royal)}
+    .topic-card p{margin:0;color:var(--text);line-height:1.65}
+    @media(max-width:720px){.topic-grid{grid-template-columns:1fr}}
+    footer{padding:24px;text-align:center;color:var(--muted)}
+    /* Chat widget styles */
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--royal);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:12px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--royal);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+    @media (max-width:640px){header h1{font-size:22px}}
+    .contact-btn{display:inline-block;background:var(--royal);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
+    .contact-btn:hover{background:#152d54}
+    .topic-card{cursor:pointer;transition:transform 0.2s ease, box-shadow 0.2s ease}
+    .topic-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(11,30,60,0.12)}
+    .modal{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.5);overflow:auto}
+    .modal-content{background-color:var(--card);margin:5% auto;padding:30px;border-radius:12px;width:90%;max-width:900px;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(11,30,60,0.2)}
+    .modal-close{color:var(--royal);float:right;font-size:28px;font-weight:bold;cursor:pointer}
+    .modal-close:hover{color:#152d54}
+    .modal h2{margin-top:0;color:var(--royal)}
+    .modal p{color:var(--text);line-height:1.8}
+    .modal strong{color:var(--royal)}
+    .modal ol{color:var(--text);line-height:1.8}
+    .modal ol li{margin:12px 0}
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link" href="countries.html">Countries</a>
+      <a class="site-nav__link site-nav__link--active" href="sample-resolution.html" aria-current="page">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+
+  <div class="container">
+    <div class="intro">
+      <h1>Real-World Examples & Templates</h1>
+      <p>Learn through concrete examples: explore sample resolutions, real resolution formats, and practical templates that show how professional UN committees draft policy documents. Use these as models for your own resolutions.</p>
+    </div>
+    <section class="section">
+      <div class="topic-grid">
+        <div class="topic-card" onclick="openModal('resolutionModal')">
+          <h2>A. Resolution Structure</h2>
+          <p>Learn how to organise preambulatory and operative clauses, sponsors, and signatories for a professional draft.</p>
+        </div>
+        <div class="topic-card">
+          <h2>B. Writing Operative Clauses</h2>
+          <p>Use clear language, action verbs, and numbered sub-clauses to make your proposals precise and effective.</p>
+        </div>
+        <div class="topic-card">
+          <h2>C. Formatting & Revision</h2>
+          <p>Follow UN formatting conventions, check your numbering, and revise for clarity before submitting.</p>
+        </div>
+      </div>
+    </section>
+    <div style="background:var(--card);padding:30px;border-radius:12px;text-align:center;margin:30px 0;">
+      <p style="color:var(--muted);margin:0;">Each country entry opens detailed diplomatic profiles, economic data, and policy alignment information to support your analysis and research.</p>
+    </div>
+    <div id="resolutionModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('resolutionModal')">&times;</span>
+        <h2>Sample Resolution: Humanity Without Borders</h2>
+        <p><strong>Committee:</strong> World Health Organisation (WHO)</p>
+        <p><strong>Agenda:</strong> "Mental Health Action Plan: Promoting Care and Treatment"</p>
+        <p><strong>Sponsors:</strong> Kingdom of Norway, Romania, Republic of Singapore</p>
+        <p><strong>Signatories:</strong> Kingdom of Belgium, Kingdom of Bhutan, Federative Republic of Brazil, Kingdom of Cambodia, Canada, Republic of Chile, Republic of Cuba, Republic of Finland, Republic of Iceland, Islamic Republic of Iran, Republic of Iraq, Hashemite Kingdom of Jordan, Malaysia, United Kingdom of Great Britain and Northern Ireland</p>
+        <p><strong>Deeply concerned</strong> by the rising global burden of mental health disorders and the growing lack of access to proper treatment and support systems;</p>
+        <p><strong>Recognizing</strong> that mental health is an essential component of overall public health and human well-being;</p>
+        <p><strong>Alarmed</strong> by the shortage of mental health infrastructure, trained professionals, and affordable psychiatric care in many developing and underserved regions;</p>
+        <p><strong>Acknowledging</strong> the severe psychological impact of armed conflict, displacement, cyberbullying, economic instability, and humanitarian crises on vulnerable populations;</p>
+        <p><strong>Noting with concern</strong> the continued stigma surrounding mental illness, which prevents millions from seeking timely support and treatment;</p>
+        <p><strong>Recognizing</strong> the increasing role of technology, telemedicine, and digital healthcare in improving access to mental health services worldwide;</p>
+        <p><strong>Reaffirming</strong> the importance of international cooperation in strengthening mental healthcare systems, research, and crisis response mechanisms;</p>
+        <p><strong>Recommends</strong> for the creation of an International Mental Health Solidarity Fund for accessing affordable medication in developing nations to be supervised by the WHO;</p>
+        <p><strong>Encourages</strong> all member states to form media outreach programs, public education awareness under the initiative led by WHO titled "Voices of Resilience";</p>
+        <p><strong>Calls for</strong> the establishment of an International Mental Health Data and Research Alliance to monitor the emerging trends of global mental health;</p>
+        <p><strong>Supports</strong> the development of an initiative, "Healing Beyond Words", for a multilingual digital platform for anonymous counseling;</p>
+        <p><strong>Requests</strong> the WHO to provide funding to expand the Mental Health Workforce for cross-border by the establishment of specialized Mental Health Emergency Response Teams;</p>
+        <p><strong>Alarmed</strong> at the fact that Mental Health spending globally is still stuck at two percent of the health budgets of the nations around the world, especially the poor nations that spend only USD 0.02 on Mental Health care per citizen per year;</p>
+        <p><strong>Recognizing</strong> that investing one dollar in mental health treatment will pay for five dollars in productivity from that treated individual.</p>
+        <p><strong>Hereby Resolves,</strong></p>
+        <ol>
+          <li><p><strong>Proposes</strong> the <strong>integration</strong> of <strong>mental healthcare programs</strong> into <strong>primary healthcare systems</strong> through <strong>coordinated cooperation</strong> between <strong>member states</strong>, the <strong>World Health Organization (WHO)</strong>, and relevant <strong>international health bodies</strong> to ensure that <strong>mental health treatment</strong> remains <strong>affordable</strong>, <strong>accessible</strong>, and <strong>non-discriminatory</strong> for all populations: a. <strong>Encourages</strong> the <strong>training</strong> of <strong>primary healthcare workers</strong> in <strong>psychological first aid</strong>, <strong>early diagnosis</strong>, and <strong>community-based treatment methods</strong>, b. <strong>Supports</strong> the development of <strong>affordable public mental healthcare infrastructure</strong> in <strong>underserved regions</strong>, particularly within <strong>low-income</strong> and <strong>developing nations</strong>;</p></li>
+          <li><p><strong>Urges</strong> the <strong>expansion</strong> of <strong>mental healthcare services</strong> currently concentrated in <strong>urban centers</strong> toward <strong>rural</strong> and <strong>marginalized communities</strong> through <strong>sustainable healthcare outreach programs</strong>: a. <strong>Encourages</strong> the establishment of <strong>mobile mental health clinics</strong> and <strong>outreach initiatives</strong> to improve <strong>accessibility</strong> in <strong>geographically isolated areas</strong>, b. <strong>Recommends partnerships</strong> between <strong>governments</strong> and <strong>local healthcare organizations</strong> to address shortages of <strong>trained mental health professionals</strong>;</p></li>
+          <li><p><strong>Calls for</strong> the establishment of <strong>mental health support systems</strong> within <strong>schools</strong>, <strong>universities</strong>, and <strong>educational institutions</strong> to assist students experiencing <strong>psychological distress</strong> and <strong>emotional challenges</strong>: a. <strong>Encourages</strong> the inclusion of <strong>counselling services</strong>, <strong>peer-support initiatives</strong>, and <strong>mental wellness education</strong> within academic institutions, b. <strong>Supports awareness campaigns</strong> aimed at <strong>reducing stigma</strong> surrounding <strong>student mental health</strong> and encouraging <strong>early intervention</strong>;</p></li>
+          <li><p><strong>Supports</strong> the development and implementation of <strong>telemedicine technologies</strong> and <strong>digital mental health platforms</strong> to provide <strong>counselling</strong> and <strong>psychological support</strong> for individuals residing in <strong>remote</strong> or <strong>underserved regions</strong>: a. <strong>Encourages international cooperation</strong> in improving <strong>digital healthcare infrastructure</strong> and <strong>internet accessibility</strong>, b. <strong>Recommends</strong> the implementation of <strong>privacy protections</strong> and <strong>ethical standards</strong> regarding <strong>patient confidentiality</strong> within <strong>digital healthcare systems</strong>; c. <strong>Requires</strong> all digital platforms under this initiative to utilize <strong>decentralized data storage networks</strong> to ensure full compliance with <strong>regional data sovereignty laws</strong>. d. <strong>Establishes</strong> a <strong>voluntary certification framework</strong> for <strong>AI-assisted mental health tools</strong>, requiring minimum standards of <strong>clinical validation</strong>, <strong>algorithmic transparency</strong>, <strong>human clinical oversight</strong>, and <strong>data privacy protection</strong> prior to deployment in <strong>member state health systems</strong>.</p></li>
+          <li><p><strong>Considers</strong> the establishment of <strong>international funding mechanisms</strong> led by <strong>economically developed member states</strong>, <strong>international financial institutions</strong>, and <strong>humanitarian organizations</strong> to improve <strong>mental healthcare systems</strong> within <strong>developing nations</strong>: a. <strong>Encourages transparent allocation</strong> of funding toward <strong>healthcare infrastructure</strong>, <strong>workforce training</strong>, and <strong>rehabilitation services</strong>, b. <strong>Mandates</strong> that recipient states ensure <strong>accountability</strong> and <strong>effective utilization</strong> of financial assistance toward <strong>long-term mental health development goals</strong>; c. <strong>Urges</strong> member states to establish <strong>legally binding requirements</strong> mandating <strong>mental health expenditure</strong> grow proportionally with <strong>national health budget allocations</strong>, ensuring financing survives <strong>fiscal austerity cycles</strong> rather than remaining subject to annual political discretion;</p></li>
+          <li><p><strong>Calls for</strong> the establishment of <strong>rehabilitation</strong>, <strong>trauma recovery</strong>, and <strong>psychological support programs</strong> for <strong>refugees</strong>, <strong>victims of armed conflict</strong>, and individuals affected by <strong>displacement</strong> and <strong>humanitarian crises</strong>: a. <strong>Encourages cooperation</strong> between <strong>humanitarian organizations</strong> and <strong>national governments</strong> to provide <strong>emergency psychological assistance</strong>, b. <strong>Supports specialized mental health initiatives</strong> focused on <strong>children</strong>, <strong>women</strong>, and <strong>vulnerable populations</strong> affected by conflict;</p></li>
+          <li><p><strong>Recommends</strong> the international sharing of <strong>medical research</strong>, <strong>scientific innovation</strong>, and <strong>technological advancements</strong> related to <strong>mental health treatment</strong> between <strong>member states</strong> and <strong>global medical institutions</strong>: a. <strong>Encourages collaborative research initiatives</strong> focused on improving <strong>diagnosis</strong>, <strong>treatment methods</strong>, and <strong>psychiatric care accessibility</strong>, b. <strong>Supports knowledge-sharing partnerships</strong> between <strong>developed</strong> and <strong>developing healthcare systems</strong>;</p></li>
+          <li><p><strong>Encourages</strong> the development of <strong>public awareness campaigns</strong> designed to combat <strong>stigma</strong>, <strong>discrimination</strong>, and <strong>misinformation</strong> associated with <strong>mental illnesses</strong>: a. <strong>Supports media campaigns</strong>, <strong>educational workshops</strong>, and <strong>community-led initiatives</strong> promoting <strong>mental health awareness</strong>, b. <strong>Encourages public figures</strong>, <strong>educators</strong>, and <strong>community leaders</strong> to advocate for <strong>open discussions</strong> surrounding <strong>psychological well-being</strong>;</p></li>
+          <li><p><strong>Urges</strong> governments, educational institutions, and technology companies to address <strong>cyberbullying</strong>, <strong>online harassment</strong>, and <strong>digital stress</strong> affecting <strong>young populations</strong>: a. <strong>Encourages</strong> the implementation of <strong>digital safety education</strong> and <strong>responsible social media usage programs</strong>, b. <strong>Supports stronger monitoring systems</strong> and <strong>reporting mechanisms</strong> to protect <strong>vulnerable individuals</strong> from <strong>online psychological harm</strong>;</p></li>
+          <li><p><strong>Supports</strong> the implementation of <strong>workplace mental health policies</strong> that promote <strong>employee well-being</strong>, <strong>equal treatment</strong>, and access to <strong>psychological support services</strong>: a. <strong>Encourages employers</strong> to establish <strong>counselling services</strong>, <strong>stress management initiatives</strong>, and <strong>reasonable workplace accommodations</strong>, b. <strong>Recommends protections against discrimination</strong> targeting employees experiencing <strong>mental health conditions</strong>;</p></li>
+          <li><p><strong>Recommends</strong> the establishment of <strong>emergency mental health response systems</strong> during <strong>natural disasters</strong>, <strong>armed conflicts</strong>, <strong>pandemics</strong>, and <strong>humanitarian emergencies</strong>: a. <strong>Encourages</strong> the inclusion of <strong>psychological support units</strong> within <strong>disaster response frameworks</strong>, b. <strong>Supports rapid deployment</strong> of <strong>trained mental health professionals</strong> during emergencies;</p></li>
+          <li><p><strong>Calls upon</strong> all member states to ensure that <strong>essential psychiatric medicines</strong>, <strong>counselling services</strong>, and <strong>humanitarian mental health assistance</strong> remain accessible during periods of <strong>conflict</strong>, <strong>instability</strong>, or <strong>national emergencies</strong>: a. <strong>Encourages international humanitarian coordination</strong> to prevent disruptions in <strong>mental healthcare delivery</strong>, b. <strong>Emphasizes</strong> the protection of <strong>vulnerable populations</strong> whose access to treatment may be threatened during crises, c. <strong>Strongly urges</strong> that <strong>humanitarian exemptions</strong> be explicitly applied to <strong>mental health medicines</strong> and resources in <strong>sanctioned nations</strong>, ensuring uninterrupted access to <strong>essential psychiatric care</strong> regardless of political circumstance.</p></li>
+          <li><p><strong>Calls upon</strong> all member states to refrain from imposing or maintaining <strong>unilateral coercive economic measures</strong>, including <strong>sanctions</strong>, that obstruct the ability of <strong>developing nations</strong> to procure <strong>psychiatric medicines</strong>, <strong>mental health technologies</strong>, and <strong>healthcare infrastructure</strong>, noting that such measures constitute a violation of the <strong>right to health</strong> under <strong>international humanitarian law</strong>.</p></li>
+          <li><p><strong>Emphasizes</strong> the need for <strong>sustainable</strong> and <strong>progressive financing</strong> in mental healthcare by urging all member states to allocate a minimum of <strong>2.5% of national health budgets</strong> to <strong>mental health services</strong> as an immediate benchmark, with a progressive target of <strong>5%</strong> in the long term in alignment with <strong>WHO recommendations</strong>, accompanied by <strong>mandatory annual reporting</strong> to WHO to ensure <strong>transparency</strong>, <strong>accountability</strong>, and <strong>measurable progress</strong> toward closing the <strong>global mental health treatment gap</strong>.</p></li>
+          <li><p><strong>Emphasizes</strong> that <strong>mental health policy implementation</strong> should not impose <strong>disproportionate financial obligations</strong> on <strong>low-income countries</strong> while maintaining <strong>adaptability</strong> to different <strong>socio-economic conditions</strong> and <strong>public health priorities</strong> of member states.</p></li>
+        </ol>
+      </div>
+    </div>
+
+    <a class="back-link" href="index.html">Return to Persuado Home</a>
+      <details id="A" open>
+        <summary>A</summary>
+        <div class="country-list">
+          <a href="country.html?c=afghanistan">Afghanistan</a>
+          <a href="country.html?c=albania">Albania</a>
+          <a href="country.html?c=algeria">Algeria</a>
+          <a href="country.html?c=andorra">Andorra</a>
+          <a href="country.html?c=angola">Angola</a>
+          <a href="country.html?c=antigua-and-barbuda">Antigua and Barbuda</a>
+          <a href="country.html?c=argentina">Argentina</a>
+          <a href="country.html?c=armenia">Armenia</a>
+          <a href="country.html?c=australia">Australia</a>
+          <a href="country.html?c=austria">Austria</a>
+          <a href="country.html?c=azerbaijan">Azerbaijan</a>
+        </div>
+      </details>
+
+    </section>
+
+    <footer>
+      <small>Persuado Examples — Resolution templates and sample resolutions</small>
+      <p style="margin-top:12px"><a href="index.html" class="button">Return to Persuado Home</a></p>
+    </footer>
+  
+    <!-- Chat widget -->
+    <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+    <p style="text-align:center;margin-top:12px"><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+    <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+      <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+      <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+    </div>
+
+    <script>
+      function openModal(modalId){
+        const modal = document.getElementById(modalId);
+        if(modal){modal.style.display = 'block';}
+      }
+      function closeModal(modalId){
+        const modal = document.getElementById(modalId);
+        if(modal){modal.style.display = 'none';}
+      }
+      window.onclick = function(event){
+        if(event.target.classList && event.target.classList.contains('modal')){
+          event.target.style.display = 'none';
+        }
+      }
+      (function(){
+        const url = 'https://delegate-helper.lovable.app';
+        const btn = document.getElementById('chatBtn');
+        const modal = document.getElementById('chatModal');
+        const iframe = document.getElementById('chatIframe');
+        const close = document.getElementById('chatClose');
+        btn.addEventListener('click', function(){
+          const w = window.open(url,'delegateHelper','width=420,height=680');
+          if(w && !w.closed){ w.focus(); return; }
+          iframe.src = url;
+          modal.style.display = 'flex';
+          modal.setAttribute('aria-hidden','false');
+        });
+        close.addEventListener('click', function(){
+          modal.style.display='none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src='';
+        });
+        document.addEventListener('click', (e) => {
+          if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden','true');
+            iframe.src = '';
+          }
+        });
+      })();
+    </script>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

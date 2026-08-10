@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Persuado</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="form-card">
+      <h1>Welcome back</h1>
+      <p>Sign in with your email and password to access your Persuado dashboard.</p>
+
+      <form id="loginForm" class="auth-form">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" name="loginEmail" type="email" placeholder="you@example.com" required>
+
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" name="loginPassword" type="password" placeholder="Enter your password" required>
+
+        <button id="loginButton" class="button button-primary" type="submit">Login</button>
+      </form>
+
+      <div id="loginMessage" class="message-box hidden"></div>
+
+      <div class="auth-footer">
+        <p><a href="forgot-password.html">Forgot password?</a></p>
+        <p>New to Persuado? <a href="signup.html">Create a free account</a></p>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

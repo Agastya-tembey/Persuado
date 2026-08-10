@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Country Explorer | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{
+      --bg:#eef4ff;
+      --surface:#ffffff;
+      --surface-soft:#f6f9ff;
+      --text:#172033;
+      --muted:#52607d;
+      --accent:#1f4fc0;
+      --accent-dark:#0b2864;
+      --border:rgba(23,32,51,0.12);
+      --shadow:0 22px 60px rgba(11,30,60,0.08);
+      --success:#208a3e;
+    }
+
+    html{scroll-behavior:smooth}
+    html,body{min-height:100%}
+    body{font-family:'Inter',system-ui,sans-serif;background:linear-gradient(180deg,#eaf2ff 0%,#f7f9fc 100%);color:var(--text);margin:0}
+    header{background:linear-gradient(135deg,#0f356f 0%,#1f5cb0 100%);color:#fff;padding:42px 24px 36px;text-align:center}
+    header h1{font-family:'Montserrat',sans-serif;margin:0;font-size:clamp(2.4rem,4vw,3.5rem);letter-spacing:0.08em;line-height:1.05}
+    header h1 a{color:white;text-decoration:none}
+    header p{margin:16px auto 0;color:rgba(255,255,255,0.88);max-width:760px;font-size:1.05rem;line-height:1.8}
+
+    .container{width:min(94%,1180px);margin:0 auto;padding:28px 0 80px}
+    .lead{color:var(--muted);max-width:920px;margin:20px auto 24px;text-align:center;font-size:1rem;line-height:1.8}
+    .page-intro{display:grid;gap:20px;margin-bottom:28px}
+
+    .stats-banner{display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:14px}
+    .stats-card{background:var(--surface);border:1px solid rgba(31,79,192,0.12);border-radius:22px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+    .stats-card strong{font-size:2rem;color:var(--accent-dark);display:block}
+    .stats-card span{color:var(--muted);font-size:.95rem;line-height:1.6}
+
+    .search-panel{display:grid;gap:12px}
+    .search-label{font-size:.95rem;font-weight:700;color:var(--accent-dark);letter-spacing:.08em;text-transform:uppercase}
+    .search-input{width:100%;padding:18px 20px;border-radius:18px;border:1px solid rgba(23,32,51,0.12);background:var(--surface);font-size:1rem;color:var(--text);box-shadow:0 18px 45px rgba(11,30,60,0.06)}
+    .search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 18px 55px rgba(31,79,192,0.15)}
+
+    .section-header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}
+    .section-header h2{font-size:clamp(1.5rem,2vw,2rem);margin:0;color:var(--accent-dark)}
+    .section-header p{margin:0;color:var(--muted);font-size:0.97rem}
+    .eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+
+    .popular-grid,.country-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .popular-grid a,.country-list a{display:flex;align-items:center;gap:12px;padding:18px 20px;border-radius:20px;background:var(--surface);border:1px solid rgba(31,79,192,0.12);box-shadow:0 18px 40px rgba(11,30,60,0.06);text-decoration:none;color:var(--text);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    .popular-grid a:hover,.country-list a:hover{transform:translateY(-3px);box-shadow:0 26px 55px rgba(11,30,60,0.1);border-color:rgba(31,79,192,0.2)}
+    .country-emoji{font-size:1.35rem;display:inline-flex;align-items:center;justify-content:center;width:1.6em;min-width:1.6em}
+    .country-link-text{display:flex;flex-direction:column;gap:4px}
+    .country-name{font-weight:700}
+    .country-meta{font-size:.92rem;color:var(--muted)}
+
+    .popular-section{margin-bottom:28px}
+    .popular-section p{margin:0;color:var(--muted)}
+
+    .alphabet{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:20px}
+    .alphabet a{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,0.92);border:1px solid rgba(23,32,51,0.08);color:var(--accent-dark);text-decoration:none;font-weight:800;box-shadow:0 12px 32px rgba(11,30,60,0.06);transition:transform .15s ease,background .15s ease}
+    .alphabet a:hover{transform:translateY(-2px);background:var(--accent)}
+    .alphabet a:hover{color:#fff}
+
+    details{background:var(--surface);padding:18px 20px;border-radius:22px;margin-bottom:14px;border:1px solid rgba(23,32,51,0.08);box-shadow:var(--shadow)}
+    summary{font-family:'Montserrat',sans-serif;font-weight:700;cursor:pointer;color:var(--accent-dark);font-size:1.05rem;outline:none}
+
+    .directory{display:grid;gap:14px}
+    .no-results{display:none;padding:24px 20px;border-radius:20px;background:rgba(255,235,230,0.9);border:1px solid rgba(214,69,69,0.16);color:#8d2d26;text-align:center;font-weight:700}
+
+    .toolbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:14px 20px;background:linear-gradient(135deg,#0f356f,#17447f);box-shadow:0 18px 40px rgba(11,30,60,0.12);margin-bottom:16px;border-radius:18px}
+    .toolbar a{color:white;text-decoration:none;padding:10px 16px;border-radius:14px;font-weight:700;font-size:.95rem}
+    .toolbar a:hover{background:rgba(255,255,255,0.14)}
+
+    footer{padding:24px;text-align:center;color:var(--muted)}
+    .contact-btn{display:inline-block;background:var(--accent);color:#fff;padding:12px 18px;border-radius:14px;text-decoration:none;font-weight:700;margin-top:16px}
+    .contact-btn:hover{background:#0c3b84}
+
+    .button{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;margin-top:14px;background:var(--accent);color:#fff;border-radius:14px;border:none;text-decoration:none;font-weight:700;box-shadow:0 14px 34px rgba(31,79,192,0.18);transition:transform .15s ease,background .15s ease}
+    .button:hover{transform:translateY(-1px);background:#0b2f78}
+
+    .chat-btn{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(11,30,60,0.2);z-index:9999;border:none;font-weight:700}
+    .chat-btn:hover{transform:translateY(-2px)}
+    .chat-modal{position:fixed;right:22px;bottom:90px;width:420px;height:680px;border-radius:16px;box-shadow:0 20px 60px rgba(11,30,60,0.25);overflow:hidden;background:#fff;z-index:10000;display:none;flex-direction:column}
+    .chat-iframe{width:100%;height:100%;border:0}
+    .chat-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--accent);color:#fff}
+    .chat-close{background:transparent;border:none;color:#fff;font-size:20px;cursor:pointer}
+
+    @media (max-width:980px){
+      .stats-banner{grid-template-columns:repeat(2,minmax(160px,1fr))}
+      .country-list,.popular-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+    }
+    @media (max-width:720px){
+      header{padding:32px 18px 28px}
+      .page-intro,.popular-grid,.country-list,.stats-banner{grid-template-columns:1fr}
+      .search-input{padding:16px 18px}
+      .alphabet{justify-content:flex-start}
+      .toolbar{justify-content:flex-start}
+      .toolbar a,.contact-btn,.button{width:100%;text-align:center}
+      details{padding:16px}
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link site-nav__link--active" href="countries.html" aria-current="page">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+  </nav>
+
+  <div class="container">
+    <div class="page-intro">
+      <p class="lead">Use the A–Z quick links below to jump to a letter, or search instantly for any country name. This explorer keeps the existing country directory and delivers a polished delegate research experience.</p>
+      <div class="stats-banner">
+        <div class="stats-card"><strong>193</strong><span>UN Member States</span></div>
+        <div class="stats-card"><strong>5</strong><span>Permanent Security Council Members</span></div>
+        <div class="stats-card"><strong>6</strong><span>Official UN Languages</span></div>
+      </div>
+      <div class="search-panel">
+        <label for="countrySearch" class="search-label">Search countries</label>
+        <input id="countrySearch" class="search-input" type="search" placeholder="Search by country name, region, or delegation focus" aria-label="Search countries">
+      </div>
+    </div>
+
+    <section class="popular-section">
+      <div class="section-header">
+        <span class="eyebrow">Popular research countries</span>
+        <p>Top delegate picks for high-impact MUN strategy and bloc research.</p>
+      </div>
+      <div class="popular-grid">
+        <a href="country.html?c=united-states"><span class="country-name">United States</span><span class="country-meta">Global diplomacy leader</span></a>
+        <a href="country.html?c=china"><span class="country-name">China</span><span class="country-meta">Asia-Pacific superpower</span></a>
+        <a href="country.html?c=russia"><span class="country-name">Russian Federation</span><span class="country-meta">Security Council heavyweight</span></a>
+        <a href="country.html?c=united-kingdom"><span class="country-name">United Kingdom</span><span class="country-meta">Western bloc influencer</span></a>
+        <a href="country.html?c=france"><span class="country-name">France</span><span class="country-meta">European Security Council member</span></a>
+        <a href="country.html?c=india"><span class="country-name">India</span><span class="country-meta">Rising global power</span></a>
+        <a href="country.html?c=germany"><span class="country-name">Germany</span><span class="country-meta">European economic leader</span></a>
+        <a href="country.html?c=south-africa"><span class="country-name">South Africa</span><span class="country-meta">African regional partner</span></a>
+        <a href="country.html?c=brazil"><span class="country-name">Brazil</span><span class="country-meta">Latin America representative</span></a>
+        <a href="country.html?c=japan"><span class="country-name">Japan</span><span class="country-meta">East Asian diplomatic hub</span></a>
+      </div>
+    </section>
+
+    <nav class="alphabet" aria-label="Alphabet quick links">
+      <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a><a href="#E">E</a>
+      <a href="#F">F</a><a href="#G">G</a><a href="#H">H</a><a href="#I">I</a><a href="#J">J</a>
+      <a href="#K">K</a><a href="#L">L</a><a href="#M">M</a><a href="#N">N</a><a href="#O">O</a>
+      <a href="#P">P</a><a href="#Q">Q</a><a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+      <a href="#U">U</a><a href="#V">V</a><a href="#W">W</a><a href="#X">X</a><a href="#Y">Y</a><a href="#Z">Z</a>
+    <div class="site-nav__actions"><div id="navAuthLinks"></div></div></nav>
+
+    <div id="noResultsMessage" class="no-results">No countries match that search query. Try a different name or explore the A–Z directory below.</div>
+
+    <section class="directory">
+      <details id="A" open>
+        <summary>A</summary>
+        <div class="country-list">
+          <a href="country.html?c=afghanistan">Afghanistan</a>
+          <a href="country.html?c=albania">Albania</a>
+          <a href="country.html?c=algeria">Algeria</a>
+          <a href="country.html?c=andorra">Andorra</a>
+          <a href="country.html?c=angola">Angola</a>
+          <a href="country.html?c=antigua-and-barbuda">Antigua and Barbuda</a>
+          <a href="country.html?c=argentina">Argentina</a>
+          <a href="country.html?c=armenia">Armenia</a>
+          <a href="country.html?c=australia">Australia</a>
+          <a href="country.html?c=austria">Austria</a>
+          <a href="country.html?c=azerbaijan">Azerbaijan</a>
+        </div>
+      </details>
+
+      <details id="B">
+        <summary>B</summary>
+        <div class="country-list">
+          <a href="country.html?c=bahamas">Bahamas</a>
+          <a href="country.html?c=bahrain">Bahrain</a>
+          <a href="country.html?c=bangladesh">Bangladesh</a>
+          <a href="country.html?c=barbados">Barbados</a>
+          <a href="country.html?c=belarus">Belarus</a>
+          <a href="country.html?c=belgium">Belgium</a>
+          <a href="country.html?c=belize">Belize</a>
+          <a href="country.html?c=benin">Benin</a>
+          <a href="country.html?c=bhutan">Bhutan</a>
+          <a href="country.html?c=bolivia">Bolivia</a>
+          <a href="country.html?c=bosnia-and-herzegovina">Bosnia and Herzegovina</a>
+          <a href="country.html?c=botswana">Botswana</a>
+          <a href="country.html?c=brazil">Brazil</a>
+          <a href="country.html?c=brunei">Brunei</a>
+          <a href="country.html?c=bulgaria">Bulgaria</a>
+          <a href="country.html?c=burkina-faso">Burkina Faso</a>
+          <a href="country.html?c=burundi">Burundi</a>
+        </div>
+      </details>
+
+      <details id="C">
+        <summary>C</summary>
+        <div class="country-list">
+          <a href="country.html?c=cabo-verde">Cabo Verde</a>
+          <a href="country.html?c=cambodia">Cambodia</a>
+          <a href="country.html?c=cameroon">Cameroon</a>
+          <a href="country.html?c=canada">Canada</a>
+          <a href="country.html?c=central-african-republic">Central African Republic</a>
+          <a href="country.html?c=chad">Chad</a>
+          <a href="country.html?c=chile">Chile</a>
+          <a href="country.html?c=china">China</a>
+          <a href="country.html?c=colombia">Colombia</a>
+          <a href="country.html?c=comoros">Comoros</a>
+          <a href="country.html?c=congo">Congo</a>
+          <a href="country.html?c=costa-rica">Costa Rica</a>
+          <a href="country.html?c=cote-d-ivoire">Côte d'Ivoire</a>
+          <a href="country.html?c=croatia">Croatia</a>
+          <a href="country.html?c=cuba">Cuba</a>
+          <a href="country.html?c=cyprus">Cyprus</a>
+          <a href="country.html?c=czechia">Czechia</a>
+        </div>
+      </details>
+
+      <details id="D">
+        <summary>D</summary>
+        <div class="country-list">
+          <a href="country.html?c=democratic-republic-of-the-congo">Democratic Republic of the Congo</a>
+          <a href="country.html?c=denmark">Denmark</a>
+          <a href="country.html?c=djibouti">Djibouti</a>
+          <a href="country.html?c=dominica">Dominica</a>
+          <a href="country.html?c=dominican-republic">Dominican Republic</a>
+        </div>
+      </details>
+
+      <details id="E">
+        <summary>E</summary>
+        <div class="country-list">
+          <a href="country.html?c=ecuador">Ecuador</a>
+          <a href="country.html?c=egypt">Egypt</a>
+          <a href="country.html?c=el-salvador">El Salvador</a>
+          <a href="country.html?c=equatorial-guinea">Equatorial Guinea</a>
+          <a href="country.html?c=eritrea">Eritrea</a>
+          <a href="country.html?c=estonia">Estonia</a>
+          <a href="country.html?c=eswatini">Eswatini</a>
+          <a href="country.html?c=ethiopia">Ethiopia</a>
+        </div>
+      </details>
+
+      <details id="F">
+        <summary>F</summary>
+        <div class="country-list">
+          <a href="country.html?c=fiji">Fiji</a>
+          <a href="country.html?c=finland">Finland</a>
+          <a href="country.html?c=france">France</a>
+        </div>
+      </details>
+
+      <details id="G">
+        <summary>G</summary>
+        <div class="country-list">
+          <a href="country.html?c=gabon">Gabon</a>
+          <a href="country.html?c=gambia">The Gambia</a>
+          <a href="country.html?c=georgia">Georgia</a>
+          <a href="country.html?c=germany">Germany</a>
+          <a href="country.html?c=ghana">Ghana</a>
+          <a href="country.html?c=greece">Greece</a>
+          <a href="country.html?c=grenada">Grenada</a>
+          <a href="country.html?c=guatemala">Guatemala</a>
+          <a href="country.html?c=guinea">Guinea</a>
+          <a href="country.html?c=guinea-bissau">Guinea-Bissau</a>
+          <a href="country.html?c=guyana">Guyana</a>
+        </div>
+      </details>
+
+      <details id="H">
+        <summary>H</summary>
+        <div class="country-list">
+          <a href="country.html?c=haiti">Haiti</a>
+          <a href="country.html?c=honduras">Honduras</a>
+          <a href="country.html?c=hungary">Hungary</a>
+        </div>
+      </details>
+
+      <details id="I">
+        <summary>I</summary>
+        <div class="country-list">
+          <a href="country.html?c=iceland">Iceland</a>
+          <a href="country.html?c=india">India</a>
+          <a href="country.html?c=indonesia">Indonesia</a>
+          <a href="country.html?c=iran">Iran</a>
+          <a href="country.html?c=iraq">Iraq</a>
+          <a href="country.html?c=ireland">Ireland</a>
+          <a href="country.html?c=israel">Israel</a>
+          <a href="country.html?c=italy">Italy</a>
+        </div>
+      </details>
+
+      <details id="J">
+        <summary>J</summary>
+        <div class="country-list">
+          <a href="country.html?c=jamaica">Jamaica</a>
+          <a href="country.html?c=japan">Japan</a>
+          <a href="country.html?c=jordan">Jordan</a>
+        </div>
+      </details>
+
+      <details id="K">
+        <summary>K</summary>
+        <div class="country-list">
+          <a href="country.html?c=kazakhstan">Kazakhstan</a>
+          <a href="country.html?c=kenya">Kenya</a>
+          <a href="country.html?c=kiribati">Kiribati</a>
+          <a href="country.html?c=korea-south">Korea, Republic of</a>
+          <a href="country.html?c=korea-north">Korea, Democratic People's Republic of</a>
+          <a href="country.html?c=kuwait">Kuwait</a>
+          <a href="country.html?c=kyrgyzstan">Kyrgyzstan</a>
+        </div>
+      </details>
+
+      <details id="L">
+        <summary>L</summary>
+        <div class="country-list">
+          <a href="country.html?c=laos">Lao People's Democratic Republic</a>
+          <a href="country.html?c=latvia">Latvia</a>
+          <a href="country.html?c=lebanon">Lebanon</a>
+          <a href="country.html?c=lesotho">Lesotho</a>
+          <a href="country.html?c=liberia">Liberia</a>
+          <a href="country.html?c=libya">Libya</a>
+          <a href="country.html?c=liechtenstein">Liechtenstein</a>
+          <a href="country.html?c=lithuania">Lithuania</a>
+          <a href="country.html?c=luxembourg">Luxembourg</a>
+        </div>
+      </details>
+
+      <details id="M">
+        <summary>M</summary>
+        <div class="country-list">
+          <a href="country.html?c=madagascar">Madagascar</a>
+          <a href="country.html?c=malawi">Malawi</a>
+          <a href="country.html?c=malaysia">Malaysia</a>
+          <a href="country.html?c=micronesia-federated-states-of">Micronesia</a>
+          <a href="country.html?c=maldives">Maldives</a>
+          <a href="country.html?c=mali">Mali</a>
+          <a href="country.html?c=malta">Malta</a>
+          <a href="country.html?c=marshall-islands">Marshall Islands</a>
+          <a href="country.html?c=mauritania">Mauritania</a>
+          <a href="country.html?c=mauritius">Mauritius</a>
+          <a href="country.html?c=mexico">Mexico</a>
+          <a href="country.html?c=moldova">Moldova</a>
+          <a href="country.html?c=monaco">Monaco</a>
+          <a href="country.html?c=mongolia">Mongolia</a>
+          <a href="country.html?c=montenegro">Montenegro</a>
+          <a href="country.html?c=morocco">Morocco</a>
+          <a href="country.html?c=mozambique">Mozambique</a>
+          <a href="country.html?c=myanmar">Myanmar</a>
+        </div>
+      </details>
+
+      <details id="N">
+        <summary>N</summary>
+        <div class="country-list">
+          <a href="country.html?c=namibia">Namibia</a>
+          <a href="country.html?c=nauru">Nauru</a>
+          <a href="country.html?c=nepal">Nepal</a>
+          <a href="country.html?c=netherlands">Netherlands</a>
+          <a href="country.html?c=new-zealand">New Zealand</a>
+          <a href="country.html?c=nicaragua">Nicaragua</a>
+          <a href="country.html?c=niger">Niger</a>
+          <a href="country.html?c=nigeria">Nigeria</a>
+          <a href="country.html?c=north-macedonia">North Macedonia</a>
+          <a href="country.html?c=norway">Norway</a>
+        </div>
+      </details>
+
+      <details id="O">
+        <summary>O</summary>
+        <div class="country-list">
+          <a href="country.html?c=oman">Oman</a>
+        </div>
+      </details>
+
+      <details id="P">
+        <summary>P</summary>
+        <div class="country-list">
+          <a href="country.html?c=pakistan">Pakistan</a>
+          <a href="country.html?c=palau">Palau</a>
+          <a href="country.html?c=panama">Panama</a>
+          <a href="country.html?c=papua-new-guinea">Papua New Guinea</a>
+          <a href="country.html?c=paraguay">Paraguay</a>
+          <a href="country.html?c=peru">Peru</a>
+          <a href="country.html?c=philippines">Philippines</a>
+          <a href="country.html?c=poland">Poland</a>
+          <a href="country.html?c=portugal">Portugal</a>
+        </div>
+      </details>
+
+      <details id="Q">
+        <summary>Q</summary>
+        <div class="country-list">
+          <a href="country.html?c=qatar">Qatar</a>
+        </div>
+      </details>
+
+      <details id="R">
+        <summary>R</summary>
+        <div class="country-list">
+          <a href="country.html?c=romania">Romania</a>
+          <a href="country.html?c=russia">Russian Federation</a>
+          <a href="country.html?c=rwanda">Rwanda</a>
+        </div>
+      </details>
+
+      <details id="S">
+        <summary>S</summary>
+        <div class="country-list">
+          <a href="country.html?c=saint-kitts-and-nevis">Saint Kitts and Nevis</a>
+          <a href="country.html?c=saint-lucia">Saint Lucia</a>
+          <a href="country.html?c=saint-vincent-and-the-grenadines">Saint Vincent and the Grenadines</a>
+          <a href="country.html?c=samoa">Samoa</a>
+          <a href="country.html?c=san-marino">San Marino</a>
+          <a href="country.html?c=sao-tome-and-principe">Sao Tome and Principe</a>
+          <a href="country.html?c=saudi-arabia">Saudi Arabia</a>
+          <a href="country.html?c=senegal">Senegal</a>
+          <a href="country.html?c=serbia">Serbia</a>
+          <a href="country.html?c=seychelles">Seychelles</a>
+          <a href="country.html?c=sierra-leone">Sierra Leone</a>
+          <a href="country.html?c=singapore">Singapore</a>
+          <a href="country.html?c=slovakia">Slovakia</a>
+          <a href="country.html?c=slovenia">Slovenia</a>
+          <a href="country.html?c=solomon-islands">Solomon Islands</a>
+          <a href="country.html?c=somalia">Somalia</a>
+          <a href="country.html?c=south-africa">South Africa</a>
+          <a href="country.html?c=south-sudan">South Sudan</a>
+          <a href="country.html?c=spain">Spain</a>
+          <a href="country.html?c=sri-lanka">Sri Lanka</a>
+          <a href="country.html?c=sudan">Sudan</a>
+          <a href="country.html?c=suriname">Suriname</a>
+          <a href="country.html?c=sweden">Sweden</a>
+          <a href="country.html?c=switzerland">Switzerland</a>
+          <a href="country.html?c=syria">Syrian Arab Republic</a>
+        </div>
+      </details>
+
+      <details id="T">
+        <summary>T</summary>
+        <div class="country-list">
+          <a href="country.html?c=tajikistan">Tajikistan</a>
+          <a href="country.html?c=tanzania">Tanzania</a>
+          <a href="country.html?c=thailand">Thailand</a>
+          <a href="country.html?c=timor-leste">Timor-Leste</a>
+          <a href="country.html?c=togo">Togo</a>
+          <a href="country.html?c=tonga">Tonga</a>
+          <a href="country.html?c=trinidad-and-tobago">Trinidad and Tobago</a>
+          <a href="country.html?c=tunisia">Tunisia</a>
+          <a href="country.html?c=turkey">Turkey</a>
+          <a href="country.html?c=turkmenistan">Turkmenistan</a>
+          <a href="country.html?c=tuvalu">Tuvalu</a>
+        </div>
+      </details>
+
+      <details id="U">
+        <summary>U</summary>
+        <div class="country-list">
+          <a href="country.html?c=uganda">Uganda</a>
+          <a href="country.html?c=ukraine">Ukraine</a>
+          <a href="country.html?c=united-arab-emirates">United Arab Emirates</a>
+          <a href="country.html?c=united-kingdom">United Kingdom</a>
+          <a href="country.html?c=united-states">United States</a>
+          <a href="country.html?c=uruguay">Uruguay</a>
+          <a href="country.html?c=uzbekistan">Uzbekistan</a>
+        </div>
+      </details>
+
+      <details id="V">
+        <summary>V</summary>
+        <div class="country-list">
+          <a href="country.html?c=vanuatu">Vanuatu</a>
+          <a href="country.html?c=vatican-city">Vatican City</a>
+          <a href="country.html?c=venezuela">Venezuela</a>
+          <a href="country.html?c=vietnam">Vietnam</a>
+        </div>
+      </details>
+
+      <details id="W">
+        <summary>W</summary>
+        <div class="country-list">
+          <a href="country.html?c=western-sahara">Western Sahara</a>
+        </div>
+      </details>
+
+      <details id="X">
+        <summary>X</summary>
+        <div class="country-list">
+          <em>No commonly used country names start with X.</em>
+        </div>
+      </details>
+
+      <details id="Y">
+        <summary>Y</summary>
+        <div class="country-list">
+          <a href="country.html?c=yemen">Yemen</a>
+        </div>
+      </details>
+
+      <details id="Z">
+        <summary>Z</summary>
+        <div class="country-list">
+          <a href="country.html?c=zambia">Zambia</a>
+          <a href="country.html?c=zimbabwe">Zimbabwe</a>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      <p style="margin-top:12px"><a href="index.html" class="button">Return to Persuado Home</a></p>
+      <p><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+    </footer>
+
+    <!-- Chat widget -->
+    <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+    <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+      <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+      <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+    </div>
+
+    <script>
+      (function(){
+        const url = 'https://delegate-helper.lovable.app';
+        const btn = document.getElementById('chatBtn');
+        const modal = document.getElementById('chatModal');
+        const iframe = document.getElementById('chatIframe');
+        const close = document.getElementById('chatClose');
+        btn.addEventListener('click', function(){
+          const w = window.open(url,'delegateHelper','width=420,height=680');
+          if(w && !w.closed){ w.focus(); return; }
+          iframe.src = url;
+          modal.style.display = 'flex';
+          modal.setAttribute('aria-hidden','false');
+        });
+        close.addEventListener('click', function(){
+          modal.style.display='none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src='';
+        });
+        document.addEventListener('click', (e) => {
+          if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden','true');
+            iframe.src = '';
+          }
+        });
+      })();
+    </script>
+    <script>
+      (function(){
+        const searchInput = document.getElementById('countrySearch');
+        const noResults = document.getElementById('noResultsMessage');
+        const popularCards = Array.from(document.querySelectorAll('.popular-grid a'));
+        const letterSections = Array.from(document.querySelectorAll('.directory details'));
+        const allCountryLinks = Array.from(document.querySelectorAll('.country-list a'));
+
+        const normalize = (value) => value.toLowerCase().trim().normalize('NFD').replace(/[-]|[\u0300-\u036f]/g, '');
+        const getSlug = (link) => {
+          try {
+            return new URL(link.href).searchParams.get('c') || '';
+          } catch {
+            return '';
+          }
+        };
+
+        const flagMap = {
+          'afghanistan':'🇦🇫','albania':'🇦🇱','algeria':'🇩🇿','andorra':'🇦🇩','angola':'🇦🇴','antigua-and-barbuda':'🇦🇬','argentina':'🇦🇷','armenia':'🇦🇲','australia':'🇦🇺','austria':'🇦🇹','azerbaijan':'🇦🇿',
+          'bahamas':'🇧🇸','bahrain':'🇧🇭','bangladesh':'🇧🇩','barbados':'🇧🇧','belarus':'🇧🇾','belgium':'🇧🇪','belize':'🇧🇿','benin':'🇧🇯','bhutan':'🇧🇹','bolivia':'🇧🇴','bosnia-and-herzegovina':'🇧🇦','botswana':'🇧🇼','brazil':'🇧🇷','brunei':'🇧🇳','bulgaria':'🇧🇬','burkina-faso':'🇧🇫','burundi':'🇧🇮',
+          'cabo-verde':'🇨🇻','cambodia':'🇰🇭','cameroon':'🇨🇲','canada':'🇨🇦','central-african-republic':'🇨🇫','chad':'🇹🇩','chile':'🇨🇱','china':'🇨🇳','colombia':'🇨🇴','comoros':'🇰🇲','congo':'🇨🇬','costa-rica':'🇨🇷','cote-d-ivoire':'🇨🇮','croatia':'🇭🇷','cuba':'🇨🇺','cyprus':'🇨🇾','czechia':'🇨🇿',
+          'democratic-republic-of-the-congo':'🇨🇩','denmark':'🇩🇰','djibouti':'🇩🇯','dominica':'🇩🇲','dominican-republic':'🇩🇴','ecuador':'🇪🇨','egypt':'🇪🇬','el-salvador':'🇸🇻','equatorial-guinea':'🇬🇶','eritrea':'🇪🇷','estonia':'🇪🇪','eswatini':'🇸🇿','ethiopia':'🇪🇹','fiji':'🇫🇯','finland':'🇫🇮','france':'🇫🇷',
+          'gabon':'🇬🇦','gambia':'🇬🇲','georgia':'🇬🇪','germany':'🇩🇪','ghana':'🇬🇭','greece':'🇬🇷','grenada':'🇬🇩','guatemala':'🇬🇹','guinea':'🇬🇳','guinea-bissau':'🇬🇼','guyana':'🇬🇾','haiti':'🇭🇹','honduras':'🇭🇳','hungary':'🇭🇺','iceland':'🇮🇸','india':'🇮🇳','indonesia':'🇮🇩','iran':'🇮🇷','iraq':'🇮🇶','ireland':'🇮🇪','israel':'🇮🇱','italy':'🇮🇹','jamaica':'🇯🇲','japan':'🇯🇵','jordan':'🇯🇴',
+          'kazakhstan':'🇰🇿','kenya':'🇰🇪','kiribati':'🇰🇮','korea-south':'🇰🇷','korea-north':'🇰🇵','kuwait':'🇰🇼','kyrgyzstan':'🇰🇬','laos':'🇱🇦','latvia':'🇱🇻','lebanon':'🇱🇧','lesotho':'🇱🇸','liberia':'🇱🇷','libya':'🇱🇾','liechtenstein':'🇱🇮','lithuania':'🇱🇹','luxembourg':'🇱🇺','madagascar':'🇲🇬','malawi':'🇲🇼','malaysia':'🇲🇾','maldives':'🇲🇻','mali':'🇲🇱','malta':'🇲🇹','marshall-islands':'🇲🇭','mauritania':'🇲🇷','mauritius':'🇲🇺','mexico':'🇲🇽','moldova':'🇲🇩','monaco':'🇲🇨','mongolia':'🇲🇳','montenegro':'🇲🇪','morocco':'🇲🇦','mozambique':'🇲🇿','myanmar':'🇲🇲',
+          'namibia':'🇳🇦','nauru':'🇳🇷','nepal':'🇳🇵','netherlands':'🇳🇱','new-zealand':'🇳🇿','nicaragua':'🇳🇮','niger':'🇳🇪','nigeria':'🇳🇬','north-macedonia':'🇲🇰','norway':'🇳🇴','oman':'🇴🇲','pakistan':'🇵🇰','palau':'🇵🇼','panama':'🇵🇦','papua-new-guinea':'🇵🇬','paraguay':'🇵🇾','peru':'🇵🇪','philippines':'🇵🇭','poland':'🇵🇱','portugal':'🇵🇹','qatar':'🇶🇦','romania':'🇷🇴','russia':'🇷🇺','rwanda':'🇷🇼',
+          'saint-kitts-and-nevis':'🇰🇳','saint-lucia':'🇱🇨','saint-vincent-and-the-grenadines':'🇻🇨','samoa':'🇼🇸','san-marino':'🇸🇲','sao-tome-and-principe':'🇸🇹','saudi-arabia':'🇸🇦','senegal':'🇸🇳','serbia':'🇷🇸','seychelles':'🇸🇨','sierra-leone':'🇸🇱','singapore':'🇸🇬','slovakia':'🇸🇰','slovenia':'🇸🇮','solomon-islands':'🇸🇧','somalia':'🇸🇴','south-africa':'🇿🇦','south-sudan':'🇸🇸','spain':'🇪🇸','sri-lanka':'🇱🇰','sudan':'🇸🇩','suriname':'🇸🇷','sweden':'🇸🇪','switzerland':'🇨🇭','syria':'🇸🇾',
+          'tajikistan':'🇹🇯','tanzania':'🇹🇿','thailand':'🇹🇭','togo':'🇹🇬','tonga':'🇹🇴','trinidad-and-tobago':'🇹🇹','tunisia':'🇹🇳','turkey':'🇹🇷','turkmenistan':'🇹🇲','tuvalu':'🇹🇻','uganda':'🇺🇬','ukraine':'🇺🇦','united-arab-emirates':'🇦🇪','united-kingdom':'🇬🇧','united-states':'🇺🇸','uruguay':'🇺🇾','uzbekistan':'🇺🇿','vanuatu':'🇻🇺','vatican-city':'🇻🇦','venezuela':'🇻🇪','vietnam':'🇻🇳','western-sahara':'🇪🇭','yemen':'🇾🇪','zambia':'🇿🇲','zimbabwe':'🇿🇼'
+        };
+
+        const decorateFlags = () => {
+          allCountryLinks.concat(popularCards).forEach(link => {
+            const slug = getSlug(link);
+            const flag = flagMap[slug] || '🏳️';
+            link.style.setProperty('--flag-emoji', `'${flag}'`);
+            if (!link.querySelector('.country-emoji')) {
+              const flagNode = document.createElement('span');
+              flagNode.className = 'country-emoji';
+              flagNode.textContent = flag;
+              link.insertBefore(flagNode, link.firstChild);
+            }
+          });
+        };
+
+        const filterCountries = () => {
+          const query = normalize(searchInput.value);
+          let matchCount = 0;
+
+          popularCards.forEach(link => {
+            const text = normalize(link.textContent);
+            const visible = !query || text.includes(query);
+            link.style.display = visible ? '' : 'none';
+          });
+
+          letterSections.forEach(section => {
+            let sectionMatches = 0;
+            section.querySelectorAll('.country-list a').forEach(link => {
+              const text = normalize(link.textContent);
+              const visible = !query || text.includes(query);
+              link.style.display = visible ? '' : 'none';
+              if (visible) sectionMatches += 1;
+            });
+            section.style.display = sectionMatches ? '' : 'none';
+            if (sectionMatches && query) section.open = true;
+            if (!query) section.open = section.id === 'A';
+            matchCount += sectionMatches;
+          });
+
+          noResults.style.display = query && matchCount === 0 ? 'block' : 'none';
+        };
+
+        decorateFlags();
+        searchInput.addEventListener('input', filterCountries);
+      })();
+    </script>
+  </div>
+  <script type="module" src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navigation.css">
+</head>
+
+<body class="home-page">
+  <nav class="site-nav site-nav--homepage" aria-label="Primary navigation">
+    <a class="site-nav__brand" href="index.html">Persuado</a>
+    <div class="site-nav__links">
+      <a class="site-nav__link" href="un-resources.html">Research</a>
+      <a class="site-nav__link" href="countries.html">Countries</a>
+      <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+      <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+      <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+      <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+      <a class="site-nav__link" href="glossary.html">Glossary</a>
+      <a class="site-nav__link" href="about.html">About</a>
+    </div>
+    <div class="site-nav__actions">
+      <input id="searchInput" class="site-nav__search" type="text" placeholder="Search guides, templates, speeches..." oninput="searchCards()">
+      <div id="navAuthLinks"></div>
+    </div>
+  </nav>
+
+  <header class="hero-banner">
+    <div class="hero">
+      <span class="hero-kicker">Persuado</span>
+      <h1>Preparing Tomorrow's World-Class Delegates.</h1>
+      <p>Persuado is a modern platform dedicated to making Model United Nations preparation structured, accessible, and professional through reliable research, practical guidance, and powerful preparation tools.</p>
+      <a class="button button-primary" href="un-resources.html">Explore Persuado</a>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="card-grid">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Our Vision</h3>
+          <p>To make high-quality Model United Nations preparation accessible to every aspiring delegate, regardless of experience, school, or location, by providing professional resources, practical guidance, and an inclusive learning platform.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Our Mission</h3>
+          <p>Our mission is to empower thousands of Model United Nations delegates each year by making high-quality preparation, guidance, and research accessible to everyone. Persuado is committed to helping at least 1,000 delegates annually develop the confidence, knowledge, and practical skills needed to succeed in Model United Nations.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>Why Persuado Exists</h3>
+          <p>Persuado was created to remove barriers to quality Model United Nations preparation. We believe every delegate deserves access to reliable research tools, structured guidance, and professional resources without financial or geographical limitations.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-panel">
+    <div>
+      <h2>Begin with the right foundation.</h2>
+      <p>Explore Persuado’s resources and prepare with clarity, structure, and confidence.</p>
+    </div>
+    <a class="button button-primary" href="un-resources.html">Start Exploring</a>
+  </section>
+
+
+  <footer>
+    <p><a class="contact-btn" href="https://docs.google.com/forms/d/1RXGPNHVE26D-uvZBDW_vio649RdbjeHX1nCf24d5bmA/edit" target="_blank" rel="noopener">Contact Us</a></p>
+    <p>© 2026 Persuado | A learning hub for new delegates</p>
+  </footer>
+
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    function searchCards() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cards = Array.from(document.querySelectorAll('.card'));
+      if (!q) {
+        cards.forEach(c => c.style.display = '');
+        return;
+      }
+      cards.forEach(c => {
+        const text = c.innerText.toLowerCase();
+        c.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+
+  <!-- Chat widget -->
+  <button id="chatBtn" class="chat-btn" aria-label="Open chat">💬</button>
+  <div id="chatModal" class="chat-modal" role="dialog" aria-hidden="true">
+    <div class="chat-header"><div>Delegate Helper</div><button id="chatClose" class="chat-close" aria-label="Close chat">✕</button></div>
+    <iframe id="chatIframe" class="chat-iframe" src="" title="Delegate Helper"></iframe>
+  </div>
+
+  <script>
+    (function(){
+      const url = 'https://delegate-helper.lovable.app';
+      const btn = document.getElementById('chatBtn');
+      const modal = document.getElementById('chatModal');
+      const iframe = document.getElementById('chatIframe');
+      const close = document.getElementById('chatClose');
+      btn.addEventListener('click', function(){
+        const w = window.open(url,'delegateHelper','width=420,height=680');
+        if(w && !w.closed){ w.focus(); return; }
+        iframe.src = url;
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+      });
+      close.addEventListener('click', function(){
+        modal.style.display='none';
+        modal.setAttribute('aria-hidden','true');
+        iframe.src='';
+      });
+      document.addEventListener('click', (e) => {
+        if(!e.target.closest('#chatModal') && !e.target.closest('#chatBtn')){
+          modal.style.display = 'none';
+          modal.setAttribute('aria-hidden','true');
+          iframe.src = '';
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

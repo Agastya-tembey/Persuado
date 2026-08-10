@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUN Glossary & Rules of Procedure | Persuado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/navigation.css">
+  <style>
+    :root{--bg:#f4f7fd;--surface:#ffffff;--surface-soft:#eef2fb;--text:#172033;--muted:#52607d;--accent:#1f4fc0;--accent-dark:#0b2864;--border:rgba(23,32,51,0.08);--shadow:0 18px 50px rgba(11,30,60,0.08);--highlight:#fff5c8}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;min-height:100vh}
+    img{max-width:100%;display:block}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    button, .button{font-family:inherit}
+    header{background:linear-gradient(135deg,#0f356f,#1f5cb0);padding:26px 24px;color:white}
+    .brand-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .brand{font-size:1.3rem;font-weight:800;letter-spacing:0.12em;color:white}
+    .nav-links{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+    .nav-links a{color:white;background:rgba(255,255,255,0.12);padding:10px 14px;border-radius:999px;font-weight:700}
+    .nav-links a:hover{background:rgba(255,255,255,0.22)}
+    .hero-panel{width:min(94%,1180px);margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start;padding:40px 0}
+    .hero-copy{max-width:680px}
+    .eyebrow{display:inline-flex;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,0.16);color:white;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+    .hero-copy h1{font-family:'Montserrat',sans-serif;font-size:clamp(2.4rem,4vw,3.6rem);line-height:1.02;margin-bottom:18px}
+    .hero-copy p{max-width:720px;font-size:1rem;color:rgba(255,255,255,0.95);margin-bottom:24px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+    .button-primary{background:white;color:var(--accent-dark);border:none;padding:14px 22px;border-radius:16px;font-weight:700;cursor:pointer;box-shadow:0 20px 45px rgba(11,30,60,0.16);transition:transform .2s ease,box-shadow .2s ease}
+    .button-primary:hover{transform:translateY(-1px);box-shadow:0 24px 55px rgba(11,30,60,0.2)}
+    .button-secondary{background:rgba(255,255,255,0.16);color:white;border:1px solid rgba(255,255,255,0.24);padding:14px 22px;border-radius:16px;font-weight:700;cursor:pointer;transition:transform .2s ease}
+    .button-secondary:hover{transform:translateY(-1px)}
+    .page-container{width:min(94%,1180px);margin:0 auto;padding:28px 0 48px}
+    .hero-panel{padding:48px 0 40px;}
+    .hero-copy{max-width:720px}
+    .top-panel{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-bottom:24px}
+    .top-panel h2{font-size:clamp(1.9rem,2.6vw,2.4rem);color:var(--accent-dark);max-width:760px}
+    .search-panel{display:grid;gap:18px;width:100%;max-width:760px}
+    .search-panel label{font-size:.98rem;font-weight:700;color:var(--accent-dark)}
+    .search-input{width:100%;padding:18px 20px;border-radius:18px;border:1px solid rgba(23,32,51,0.12);background:rgba(255,255,255,0.96);font-size:1rem;box-shadow:0 18px 36px rgba(11,30,60,0.08)}
+    .search-input:focus{outline:none;box-shadow:0 0 0 4px rgba(31,79,192,0.14)}
+    .search-copy{color:var(--muted);font-size:.99rem;line-height:1.8}
+    .content-grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:34px}
+    .sidebar{position:sticky;top:110px;align-self:start;background:rgba(255,255,255,0.94);border:1px solid rgba(23,32,51,0.08);border-radius:32px;box-shadow:0 30px 60px rgba(11,30,60,0.08);padding:30px}
+    .sidebar h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.16em;color:var(--accent-dark);margin-bottom:20px}
+    .category-list{display:grid;gap:12px}
+    .category-list a{display:block;padding:14px 16px;border-radius:18px;background:rgba(15,88,192,0.08);color:var(--accent-dark);font-weight:700;transition:background .2s ease}
+    .category-list a:hover{background:rgba(15,88,192,0.14)}
+    .action-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+    .action-row button{border:none;background:var(--accent);color:white;padding:14px 18px;border-radius:16px;font-weight:700;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+    .action-row button:hover{transform:translateY(-1px);box-shadow:0 16px 30px rgba(11,30,60,0.16)}
+    .glossary-category{margin-bottom:38px;padding-top:12px;}
+    .category-summary{display:flex;justify-content:space-between;align-items:flex-start;gap:22px;margin-bottom:18px}
+    .category-summary h2{font-size:1.55rem;color:var(--accent-dark);margin-bottom:8px}
+    .category-summary p{color:var(--muted);max-width:760px;font-size:1rem;line-height:1.8}
+    details{background:transparent;border:none;box-shadow:none}
+    summary{padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:1.05rem;font-weight:700;color:var(--accent-dark);list-style:none;border-radius:22px;border:1px solid rgba(23,32,51,0.08);background:rgba(255,255,255,0.95);box-shadow:0 20px 40px rgba(11,30,60,0.06)}
+    summary::-webkit-details-marker{display:none}
+    details[open] summary{background:rgba(15,88,192,0.08)}
+    .details-count{color:var(--muted);font-size:.95rem}
+    .category-panel{background:rgba(255,255,255,0.96);border-radius:28px;box-shadow:0 30px 60px rgba(11,30,60,0.06);padding:26px;display:grid;gap:20px}
+    .glossary-card{background:rgba(255,255,255,0.96);border:1px solid rgba(23,32,51,0.08);border-radius:26px;box-shadow:0 26px 50px rgba(11,30,60,0.07);padding:28px;transition:transform .25s ease,border-color .25s ease,background .25s ease}
+    .glossary-card:hover{transform:translateY(-1px)}
+    .glossary-card.highlighted{border-color:var(--accent);background:rgba(255,249,225,0.95)}
+    .glossary-card h3{margin:0 0 16px;font-size:1.35rem;color:var(--accent-dark);line-height:1.2}
+    .glossary-card p{margin:0 0 14px;color:var(--muted);line-height:1.85}
+    .glossary-card strong{color:var(--accent-dark)}
+    .glossary-card ul{margin:0 0 14px;padding-left:1.3rem;color:var(--muted)}
+    .glossary-card li{margin-bottom:10px}
+    .glossary-card mark{background:rgba(255,236,138,0.92);color:#0b2864;padding:0 3px;border-radius:4px}
+    .glossary-card .entry-meta{display:grid;gap:16px}
+    .glossary-card p strong:first-child{display:inline-block;min-width:120px;font-weight:700;color:var(--accent-dark)}
+    /* Show only the active category; search will use the results pane */
+    .glossary-category{display:none}
+    .glossary-category.active{display:block}
+
+    /* Search results pane */
+    #searchResults{display:none;grid-auto-rows:min-content;gap:18px}
+    #searchResults.active{display:grid}
+    .no-results{display:none;padding:22px 24px;border-radius:24px;background:rgba(255,250,220,0.9);border:1px solid rgba(31,79,192,0.18);color:var(--accent-dark);font-weight:700}
+    .no-results.active{display:block}
+    .cheat-sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:42px}
+    .cheat-card{background:rgba(255,255,255,0.96);border:1px solid rgba(23,32,51,0.08);border-radius:28px;box-shadow:0 26px 50px rgba(11,30,60,0.07);padding:28px}
+    .cheat-card h3{margin:0 0 18px;color:var(--accent-dark);font-size:1.15rem}
+    .cheat-card ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+    .cheat-card li{background:rgba(15,88,192,0.06);padding:14px 16px;border-radius:16px;color:var(--text)}
+    .page-footer{padding:30px 0 18px;font-size:.98rem;color:var(--muted)}
+    .page-footer a{color:var(--accent)}
+    @media(max-width:1120px){.hero-panel{grid-template-columns:1fr;gap:24px}.content-grid{grid-template-columns:1fr}.sidebar{position:relative;top:0}.top-panel{align-items:flex-start}}
+    @media(max-width:860px){.hero-panel{padding:32px 0 30px}.page-container{padding:22px 0 40px}.sidebar{padding:22px}.search-panel{max-width:100%}.action-row{justify-content:flex-start}}
+    @media(max-width:720px){.hero-copy h1{font-size:2rem}.button-primary,.button-secondary{width:100%;justify-content:center}.action-row{justify-content:center}.category-list a{font-size:.95rem}.search-input{font-size:.95rem}}
+    @media(max-width:620px){header{padding:18px 18px 22px}.sidebar{border-radius:24px}.glossary-card{padding:24px}.cheat-card{padding:24px}}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="site-nav site-nav--content site-nav--compact" aria-label="Primary navigation">
+      <a class="site-nav__brand" href="index.html">Persuado</a>
+      <div class="site-nav__links">
+        <a class="site-nav__link" href="index.html">Home</a>
+        <a class="site-nav__link" href="un-resources.html">Research</a>
+        <a class="site-nav__link" href="countries.html">Countries</a>
+        <a class="site-nav__link" href="sample-resolution.html">Templates</a>
+        <a class="site-nav__link" href="opening-statements.html">Speeches</a>
+        <a class="site-nav__link" href="debate-checklist.html">MUN Checklist</a>
+        <a class="site-nav__link" href="bloc-building.html">Strategy</a>
+        <a class="site-nav__link site-nav__link--active" href="glossary.html" aria-current="page">Glossary</a>
+        <a class="site-nav__link" href="about.html">About</a>
+      </div>
+      <div class="site-nav__actions"><div id="navAuthLinks"></div></div>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <div class="eyebrow">MUN Learning Center</div>
+        <h1>MUN Glossary & Rules of Procedure</h1>
+        <p>Master the language, motions, points, and decision-making rules that shape every Model United Nations conference. This glossary is designed for new delegates who want a clear reference they can use during preparation, debate, and resolution drafting.</p>
+        <div class="hero-actions">
+          <button class="button-primary" type="button" onclick="document.getElementById('glossarySearch').focus()">Start searching</button>
+          <button class="button-secondary" type="button" onclick="scrollToSection('cheat-sheet')">Delegate cheat sheet</button>
+        </div>
+      </div>
+      <div class="search-panel">
+        <label for="glossarySearch">Search terms instantly</label>
+        <input id="glossarySearch" class="search-input" type="search" placeholder="Search terms, motions, points, resolutions..." oninput="filterGlossary()" aria-label="Search glossary terms">
+        <p class="search-copy">Use category navigation or search to jump directly to definitions, examples, mistakes, and procedural guidance. Matching cards highlight automatically.</p>
+      </div>
+    </section>
+
+    <div class="top-panel">
+      <div>
+        <h2>Discover critical MUN vocabulary and parliamentary procedure</h2>
+      </div>
+      <div class="action-row">
+          <button type="button" onclick="setAllCategories(true)">Expand all</button>
+          <button type="button" onclick="setAllCategories(false)">Collapse all</button>
+        </div>
+      </div>
+
+      <div id="noResults" class="no-results" aria-live="polite">No glossary entries match your search. Try a different keyword.</div>
+
+      <div class="content-grid">
+      <aside class="sidebar" aria-label="Glossary categories">
+        <h3>Category navigation</h3>
+        <div class="category-list">
+          <a href="#general-terminology">General MUN Terminology</a>
+          <a href="#debate-speaking">Debate &amp; Speaking</a>
+          <a href="#motions">Motions</a>
+          <a href="#points">Points</a>
+          <a href="#resolutions-amendments">Resolutions &amp; Amendments</a>
+          <a href="#voting">Voting Procedures</a>
+          <a href="#documents">Documents</a>
+          <a href="#committees-delegates">Committees &amp; Delegates</a>
+          <a href="#diplomacy-negotiation">Diplomacy &amp; Negotiation</a>
+          <a href="#advanced-procedure">Advanced Parliamentary Procedure</a>
+        </div>
+      </aside>
+
+      <section>
+        <div id="searchResults" class="category-panel" aria-live="polite"></div>
+
+        <section class="glossary-category" id="general-terminology">
+          <div class="category-summary">
+            <div>
+              <h2>General MUN Terminology</h2>
+              <p>Learn the foundational terms that describe the people, process, and tools used in every committee room.</p>
+            </div>
+            <span class="details-count">9 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>General MUN Terminology</summary>
+            <div class="glossary-card">
+              <h3>Model United Nations</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A simulation of United Nations committees where students act as delegates representing countries to discuss global issues, draft resolutions, and practice diplomacy.</p>
+                <p><strong>Practical example:</strong> In a MUN conference, a delegate for Brazil may propose a climate action plan while collaborating with other states on amendments.</p>
+                <p><strong>Common mistakes:</strong> Assuming it is the same as a debate club; MUN emphasizes negotiation, policy solutions, and formal procedure rather than adversarial argument alone.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Delegate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A student participant who represents a country, NGO, or bloc in committee, presenting positions and negotiating resolutions.</p>
+                <p><strong>Practical example:</strong> As delegate for Kenya, you explain your country’s priorities on food security and vote on amendments accordingly.</p>
+                <p><strong>Common mistakes:</strong> Confusing delegate responsibilities with personal opinion; delegates should advocate their assigned position, not their own preferences.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Chair</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The student leader who manages debate, enforces rules of procedure, and guides the committee through motions, speaker lists, and voting.</p>
+                <p><strong>Practical example:</strong> The chair calls the committee to order, asks for motions, and tracks time during speeches.</p>
+                <p><strong>Common mistakes:</strong> Ignoring the chair’s instructions; the chair controls procedure, and delegates must request recognition before speaking.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Secretariat</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The administrative team responsible for organizing the conference, preparing materials, and supporting chairs and delegates.</p>
+                <p><strong>Practical example:</strong> The secretariat circulates the agenda, collects position papers, and publishes committee updates.</p>
+                <p><strong>Common mistakes:</strong> Thinking the secretariat is part of committee debate; they remain impartial and focus on event logistics.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Committee</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A group of delegates simulating a UN body or crisis team that debates a specific agenda item.</p>
+                <p><strong>Practical example:</strong> The Security Council committee discusses sanctions, while the WHO committee debates global health policy.</p>
+                <p><strong>Common mistakes:</strong> Treating committees as informal discussion groups; committees follow strict rules and formal document procedures.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Agenda</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The official topic or list of issues the committee will address during the conference.</p>
+                <p><strong>Practical example:</strong> “Improving Access to Clean Water” is the agenda topic for a special session of the Economic and Social Council.</p>
+                <p><strong>Common mistakes:</strong> Trying to discuss unrelated issues; delegates must keep proposals aligned with the agenda item that has been set.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Quorum</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The minimum number of delegates required for the committee to conduct official business and vote on motions.</p>
+                <p><strong>Practical example:</strong> If a committee has 50 members and the rules specify quorum as a simple majority, at least 26 delegates must be present.</p>
+                <p><strong>Common mistakes:</strong> Beginning formal votes without quorum; decisions made without the required attendance are invalid.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Placard</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A card bearing a delegate’s country name used to request the floor, vote, or show position during committee sessions.</p>
+                <p><strong>Practical example:</strong> Raise your placard to speak, to submit a motion, or to request a roll call vote.</p>
+                <p><strong>Common mistakes:</strong> Forgetting to keep the placard visible; chairs and fellow delegates rely on it to recognize speakers and count votes.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="debate-speaking">
+          <div class="category-summary">
+            <div>
+              <h2>Debate &amp; Speaking</h2>
+              <p>Understand how speaking turns are organized, when you may yield, and how to participate respectfully in committee debate.</p>
+            </div>
+            <span class="details-count">6 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Debate &amp; Speaking</summary>
+            <div class="glossary-card">
+              <h3>General Speakers List</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The ordered list of delegates who will speak during formal debate, managed by the chair and often used at the start of the session.</p>
+                <p><strong>Practical example:</strong> Delegates sign up for the speakers list, and the chair calls them one by one for 60-second statements.</p>
+                <p><strong>Common mistakes:</strong> Speaking out of turn or not listening to the chair; the speakers list is the official queue for speeches.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Yield</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> When a delegate finishes their speech and gives remaining speaking time to the chair, another delegate, or the floor for questions.</p>
+                <p><strong>Practical example:</strong> A delegate yields time to questions after delivering a position statement on humanitarian aid.</p>
+                <p><strong>Common mistakes:</strong> Yielding without specifying the destination; the chair needs clear direction to manage the next speaker.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Yield to Chair</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A yield option that returns any unused time back to the chair instead of another delegate or to questions.</p>
+                <p><strong>Practical example:</strong> A delegate concludes early and yields remaining time to the chair so the committee can proceed.</p>
+                <p><strong>Common mistakes:</strong> Believing this gives another delegate extra time; it simply returns the time to committee control.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Yield to Questions</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A yield option that allows other delegates to ask brief questions after a speech.</p>
+                <p><strong>Practical example:</strong> After a speech on climate policy, the delegate yields to questions and answers inquiries from allies.</p>
+                <p><strong>Common mistakes:</strong> Treating it as debate time rather than as a chance for short clarifications.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Yield to Another Delegate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A yield option where the remaining speaking time is given to a specific delegate instead of the chair or floor.</p>
+                <p><strong>Practical example:</strong> A delegate yields to another delegate to support a joint point or follow-up statement.</p>
+                <p><strong>Common mistakes:</strong> Failing to name the delegate clearly; the chair must know who will speak next.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Right of Reply</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A special procedural privilege allowing a delegate to respond to a personal insult or direct attack after permission is granted by the chair.</p>
+                <p><strong>Practical example:</strong> When another delegate criticizes your country’s policy, you may request the right of reply to answer formally.</p>
+                <p><strong>Common mistakes:</strong> Using it for normal rebuttal; it is reserved for personal statements that directly affect the delegate or country.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="motions">
+          <div class="category-summary">
+            <div>
+              <h2>Motions</h2>
+              <p>Know how motions shape committee workflow, direct debate, and move the body through its agenda.</p>
+            </div>
+            <span class="details-count">8 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Motions</summary>
+            <div class="glossary-card">
+              <h3>Motion</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A formal proposal made by a delegate to change the flow of committee business, such as opening debate or changing the speakers list.</p>
+                <p><strong>Practical example:</strong> A delegate motions for a moderated caucus to focus discussion on financing.</p>
+                <p><strong>Common mistakes:</strong> Believing motions are informal suggestions; motions must be seconded and voted on before taking effect.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Moderated Caucus</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A structured informal debate period where delegates speak in short turns on a specific sub-topic under the chair’s direction.</p>
+                <p><strong>When to use it:</strong> When the committee needs focused discussion on a single part of the agenda with time-limited contributions.</p>
+                <p><strong>Why it matters:</strong> It allows delegates to clarify positions, negotiate language, and build momentum toward resolution drafting.</p>
+                <p><strong>Example scenario:</strong> Delegates vote for a 10-minute moderated caucus on “funding mechanisms for humanitarian aid.”</p>
+                <p><strong>Common mistakes:</strong> Treating it like general debate; delegates must speak through the chair and respect time limits.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Unmoderated Caucus</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A block of time during which delegates leave their seats to consult informally, build blocs, and draft resolutions without the chair calling on speakers.</p>
+                <p><strong>When to use it:</strong> When delegates need to negotiate directly, exchange ideas, or prepare working papers.</p>
+                <p><strong>Why it matters:</strong> It creates space for collaboration and coalition-building that often determines the success of a draft resolution.</p>
+                <p><strong>Example scenario:</strong> Delegates request a 15-minute unmoderated caucus to finalize sponsor language.</p>
+                <p><strong>Common mistakes:</strong> Failing to stay on the agenda topic or allowing one group to monopolize the discussion.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Set the Agenda</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A procedural motion to determine which topic or issue the committee will discuss first.</p>
+                <p><strong>Practical example:</strong> After opening statements, delegates vote on whether to address “cybersecurity” before “global migration.”</p>
+                <p><strong>Common mistakes:</strong> Offering it after substantive debate has started; agenda decisions occur early in committee.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Suspend Debate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to pause formal debate temporarily, often to allow an unmoderated caucus or a break.</p>
+                <p><strong>Practical example:</strong> Delegates motion to suspend debate for 10 minutes so they can work on a draft resolution.</p>
+                <p><strong>Common mistakes:</strong> Confusing it with adjournment; suspension is temporary and the committee will resume later.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Close Debate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to end debate on the current topic and move to voting on the draft resolution or amendment.</p>
+                <p><strong>Practical example:</strong> A delegate who believes the committee has finished discussing a draft resolution may motion to close debate.</p>
+                <p><strong>Common mistakes:</strong> Making it too early; chairs often require a majority and ensure delegates have had adequate time to speak.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Adjourn the Meeting</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to end the committee session entirely, closing the meeting until the next scheduled time.</p>
+                <p><strong>Practical example:</strong> At the end of the day, the committee votes to adjourn until tomorrow.</p>
+                <p><strong>Common mistakes:</strong> Attempting to use it to pause debate temporarily; it ends the entire meeting instead.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Adjourn Debate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to end discussion on one resolution or topic while keeping the committee open for other business.</p>
+                <p><strong>Practical example:</strong> Delegates may motion to adjourn debate on a unpopular draft resolution so the committee can consider another proposal.</p>
+                <p><strong>Common mistakes:</strong> Assuming it ends the whole session; it only closes debate on the current matter.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Motion to Reconsider</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to reopen debate or reconsider a decision that has already been made, typically requiring special rules or a seconded sponsor.</p>
+                <p><strong>Practical example:</strong> If a resolution fails but new information emerges, a delegate may motion to reconsider the vote.</p>
+                <p><strong>Common mistakes:</strong> Using it to reverse routine decisions; it is reserved for decisions that merit a formal second review.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="points">
+          <div class="category-summary">
+            <div>
+              <h2>Points</h2>
+              <p>Points are short procedural requests used to seek clarification, correct the record, or address personal comfort during debate.</p>
+            </div>
+            <span class="details-count">4 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Points</summary>
+            <div class="glossary-card">
+              <h3>Point of Information</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A request for clarification directed at the chair or a speaking delegate, typically used after a speech or during debate.</p>
+                <p><strong>When to use it:</strong> When you need a fact verified, want more detail on a statement, or seek clarification on procedure.</p>
+                <p><strong>Why it matters:</strong> It keeps debate precise and ensures delegates are answering the right questions.</p>
+                <p><strong>Example scenario:</strong> After a speech on sanctions, you say, “Point of information to the speaker: what timeline is your country proposing?”</p>
+                <p><strong>Common mistakes:</strong> Using it as a speech instead of a brief question; it is meant for quick clarification, not extended argument.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Point of Personal Privilege</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A procedural point used when a delegate is unable to participate due to personal discomfort, such as poor audibility or temperature.</p>
+                <p><strong>Practical example:</strong> “Point of personal privilege: I cannot hear the speaker clearly.”</p>
+                <p><strong>Common mistakes:</strong> Using it to interrupt debate for unrelated complaints; it is specifically for physical or audibility issues.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Point of Parliamentary Inquiry</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A question directed to the chair about procedure, timing, or how to raise a motion.</p>
+                <p><strong>Practical example:</strong> “Point of parliamentary inquiry: may I yield to the delegate for questions after my speech?”</p>
+                <p><strong>Common mistakes:</strong> Asking substantive policy questions; it should only address procedure or the rules of order.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Point of Order</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A correction raised when a delegate believes the rules of procedure are being violated.</p>
+                <p><strong>When to use it:</strong> When committee procedure has been broken, such as speaking out of turn or incorrect vote counting.</p>
+                <p><strong>Why it matters:</strong> It preserves fair process and ensures that decisions are legitimate.</p>
+                <p><strong>Example scenario:</strong> If a delegate speaks without recognition, another delegate may say, “Point of order: the speaker is out of turn.”</p>
+                <p><strong>Common mistakes:</strong> Using it to challenge a substance or tone; it is strictly procedural, not argumentative.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="resolutions-amendments">
+          <div class="category-summary">
+            <div>
+              <h2>Resolutions &amp; Amendments</h2>
+              <p>Explore the core documents and roles involved in drafting, sponsoring, and refining committee policy proposals.</p>
+            </div>
+            <span class="details-count">10 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Resolutions &amp; Amendments</summary>
+            <div class="glossary-card">
+              <h3>Working Paper</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> An informal draft document shared among delegates to begin collaboration before a draft resolution is formally submitted.</p>
+                <p><strong>Practical example:</strong> Delegates circulate a working paper outlining proposed preambulatory and operative clauses to verify support.</p>
+                <p><strong>Common mistakes:</strong> Treating it as a final text; working papers are still flexible and may change significantly.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Draft Resolution</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A formal proposed resolution submitted for debate and voting, containing preambulatory and operative clauses.</p>
+                <p><strong>When to use it:</strong> When a group has agreed on a policy solution and is ready to move to formal committee consideration.</p>
+                <p><strong>Why it matters:</strong> It becomes the basis for structured debate and can be amended or voted on by the committee.</p>
+                <p><strong>Example scenario:</strong> After several informal sessions, a coalition submits a draft resolution on refugee protection.</p>
+                <p><strong>Common mistakes:</strong> Waiting too long to submit or submitting a draft without enough sponsors; that reduces its chances of being heard.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Resolution</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A document adopted by the committee that expresses the collective decision on how to address the agenda issue.</p>
+                <p><strong>When to use it:</strong> When the committee has reached a consensus or voting majority for a proposal.</p>
+                <p><strong>Why it matters:</strong> It is the final official record of the committee’s agreed policy recommendations.</p>
+                <p><strong>Example scenario:</strong> The committee passes a resolution recommending measures to improve global education access.</p>
+                <p><strong>Common mistakes:</strong> Confusing a draft resolution with an adopted resolution; only after a successful vote does a draft become an official resolution.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Sponsor</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A delegate or group of delegates who formally author and support a draft resolution.</p>
+                <p><strong>Practical example:</strong> Three countries sign as sponsors on a draft resolution proposing climate aid.</p>
+                <p><strong>Common mistakes:</strong> Listing too few sponsors; many committees require a minimum number for submission.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Signatory</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A delegate who supports a draft resolution enough to endorse its submission but is not a primary author.</p>
+                <p><strong>Practical example:</strong> Several delegates sign as signatories to show they will consider the draft resolution for discussion.</p>
+                <p><strong>Common mistakes:</strong> Believing signatories automatically vote yes; they only guarantee the draft will be debated.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Friendly Amendment</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A change to a draft resolution agreed to by all sponsors and introduced without a formal vote.</p>
+                <p><strong>Practical example:</strong> Sponsors revise wording to make a clause more inclusive, and the chair accepts it as friendly.</p>
+                <p><strong>Common mistakes:</strong> Assuming all delegates can approve it; only sponsors need to agree for a friendly amendment.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Unfriendly Amendment</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> An amendment to a draft resolution that is not approved by all sponsors and must be voted on separately.</p>
+                <p><strong>Practical example:</strong> A delegate proposes an unfriendly amendment to strengthen sanctions language.</p>
+                <p><strong>Common mistakes:</strong> Believing that an unfriendly amendment can be added without debate; it requires a vote and may fail.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Preambulatory Clause</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The introductory phrases in a draft resolution that explain the context, concerns, and legal basis for the proposed action.</p>
+                <p><strong>Practical example:</strong> “Recognizing the urgent need for sustainable water management…” is a preambulatory clause.</p>
+                <p><strong>Common mistakes:</strong> Using operative language in preambulatory clauses; they should not contain commands.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Operative Clause</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The action-oriented clauses in a draft resolution that explain what the committee recommends or decides.</p>
+                <p><strong>Practical example:</strong> “Calls upon member states to provide funding for renewable energy projects…” is an operative clause.</p>
+                <p><strong>Common mistakes:</strong> Writing vague or overly broad operative clauses; they should be specific and actionable.</p>
+                <p><strong>See also:</strong> <a href="sample-resolution.html">sample resolution</a></p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="voting">
+          <div class="category-summary">
+            <div>
+              <h2>Voting Procedures</h2>
+              <p>Review how committees decide outcomes, including the majorities required for different types of decisions.</p>
+            </div>
+            <span class="details-count">6 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Voting Procedures</summary>
+            <div class="glossary-card">
+              <h3>Simple Majority</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A vote in which more than half of the delegates voting must vote in favor for a motion or resolution to pass.</p>
+                <p><strong>Practical example:</strong> If 40 delegates vote yes or no, at least 21 yes votes are needed.</p>
+                <p><strong>Common mistakes:</strong> Counting abstentions as yes; they are excluded from the yes/no total.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Two-Thirds Majority</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A vote requiring two-thirds of delegates voting to approve, often used for important procedural motions or amendments.</p>
+                <p><strong>Practical example:</strong> For 30 votes cast, at least 20 must be yes.</p>
+                <p><strong>Common mistakes:</strong> Forgetting that abstentions reduce the denominator only if they count as votes not cast in some committees; always confirm the rules.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Roll Call Vote</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A vote where the chair calls each country’s name and records their individual vote aloud.</p>
+                <p><strong>Practical example:</strong> The chair reads each country and each delegate responds yes, no, or abstain.</p>
+                <p><strong>Common mistakes:</strong> Speaking before your country is called; the chair controls the order.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Division of the Question</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to split a draft resolution into separate parts so delegates can vote on them independently.</p>
+                <p><strong>Practical example:</strong> A delegate motions to divide a resolution so the committee votes on the funding clause separately from the enforcement clause.</p>
+                <p><strong>Common mistakes:</strong> Asking to divide too broadly; the chair may deny if it would make voting confusing.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Abstention</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A decision by a delegate to neither support nor oppose a vote.</p>
+                <p><strong>Practical example:</strong> If a delegate does not fully agree with a resolution but does not wish to block it, they may abstain.</p>
+                <p><strong>Common mistakes:</strong> Using it as a protest vote; abstaining is a neutral option, not a statement of opposition.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Veto Power</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The ability of certain powerful members, such as permanent members of the Security Council, to block a resolution by voting no.</p>
+                <p><strong>Practical example:</strong> If a permanent member says no on a Security Council resolution, the resolution fails despite majority support.</p>
+                <p><strong>Common mistakes:</strong> Believing it applies in all committees; only specific bodies like the Security Council grant veto power.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="documents">
+          <div class="category-summary">
+            <div>
+              <h2>Documents</h2>
+              <p>Identify the key written materials delegates submit and use during a MUN conference.</p>
+            </div>
+            <span class="details-count">5 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Documents</summary>
+            <div class="glossary-card">
+              <h3>Position Paper</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A concise document that outlines a delegate’s country position, priorities, and proposed solutions on the agenda topic.</p>
+                <p><strong>Practical example:</strong> Delegates submit position papers before the conference to demonstrate research and policy ideas.</p>
+                <p><strong>Common mistakes:</strong> Turning it into an essay; it should be clear, organized, and directly tied to the agenda.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Resolution</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The final document a committee approves to address the agenda issue, including both preambulatory and operative clauses.</p>
+                <p><strong>Practical example:</strong> After debate and amendments, a resolution is adopted to coordinate international action on climate change.</p>
+                <p><strong>Common mistakes:</strong> Confusing the draft stage with the final adopted resolution; only adopted texts become official committee positions.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Amendment</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A proposed change to a draft resolution that modifies, adds, or removes specific wording.</p>
+                <p><strong>Practical example:</strong> Delegates propose an amendment to strengthen the wording of an operative clause on aid distribution.</p>
+                <p><strong>Common mistakes:</strong> Proposing amendments without sponsor consent; they often require formal submission and a vote.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Communiqué</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A brief statement issued by a committee or crisis body to explain its decisions or position to the broader conference.</p>
+                <p><strong>Practical example:</strong> After a rapid response session, delegates release a communiqué summarizing their agreed course of action.</p>
+                <p><strong>Common mistakes:</strong> Using it as a substitute for a resolution; it is a statement, not a formal policy document.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Directive</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A command or instruction issued in crisis committees to move the narrative or assign actions to delegates.</p>
+                <p><strong>Practical example:</strong> In a crisis simulation, the chair issues a directive asking a delegate to coordinate evacuation efforts.</p>
+                <p><strong>Common mistakes:</strong> Treating directives like resolutions; they are usually committee or crisis-specific orders, not full policy documents.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="committees-delegates">
+          <div class="category-summary">
+            <div>
+              <h2>Committees &amp; Delegates</h2>
+              <p>Understand the different roles and groups that shape alliances, information flow, and representation in committee rooms.</p>
+            </div>
+            <span class="details-count">5 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Committees &amp; Delegates</summary>
+            <div class="glossary-card">
+              <h3>Permanent Member</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> In some UN bodies, a state with ongoing membership and special procedural privileges, such as veto power in the Security Council.</p>
+                <p><strong>Practical example:</strong> The United States, China, Russia, France, and the United Kingdom are permanent members of the Security Council.</p>
+                <p><strong>Common mistakes:</strong> Assuming all committees have permanent members; only certain UN organs use this concept.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Observer State</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A state or organization allowed to attend committee sessions without full voting rights.</p>
+                <p><strong>Practical example:</strong> The Holy See or Palestine may observe Security Council debate but cannot vote on resolutions.</p>
+                <p><strong>Common mistakes:</strong> Treating them as full members; observers typically cannot sponsor or vote on resolutions.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>NGO</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A non-governmental organization that may participate in certain MUN simulations to represent civil society perspectives.</p>
+                <p><strong>Practical example:</strong> An NGO delegate may advocate for human rights or environmental protection in a committee.</p>
+                <p><strong>Common mistakes:</strong> Expecting NGO delegates to act as countries; they represent an organization’s interest, not a national position.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Bloc</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A group of delegates with similar interests who work together to support resolutions and motions.</p>
+                <p><strong>Practical example:</strong> Delegates from African nations may form an African bloc to coordinate on development issues.</p>
+                <p><strong>Common mistakes:</strong> Forming a bloc too rigidly; successful blocs remain open to negotiation and compromise.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Coalition</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A temporary partnership of delegates or blocs working together on a specific draft resolution or motion.</p>
+                <p><strong>Practical example:</strong> A coalition of small states and environmental advocates drafts an amendment to strengthen climate commitments.</p>
+                <p><strong>Common mistakes:</strong> Assuming a coalition is permanent; it often dissolves after the issue is resolved.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="diplomacy-negotiation">
+          <div class="category-summary">
+            <div>
+              <h2>Diplomacy &amp; Negotiation</h2>
+              <p>Learn the soft skills that help delegates build trust, reach agreement, and represent their country’s interests effectively.</p>
+            </div>
+            <span class="details-count">4 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Diplomacy &amp; Negotiation</summary>
+            <div class="glossary-card">
+              <h3>Bloc Building</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The process of forming alliances with other delegates who share similar goals or policy priorities.</p>
+                <p><strong>Practical example:</strong> You may work with delegates from Latin American countries to support a common development proposal.</p>
+                <p><strong>Common mistakes:</strong> Rushing to form a bloc without understanding others’ positions; effective bloc building requires listening and trust.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Negotiation</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The give-and-take process of finding common ground, adjusting positions, and creating workable solutions.</p>
+                <p><strong>Practical example:</strong> Negotiating the wording of a clause so that both developed and developing countries feel represented.</p>
+                <p><strong>Common mistakes:</strong> Treating it as winning or losing; good negotiation seeks mutually acceptable outcomes.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Consensus</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> General agreement among delegates where objections are minimal and the body can adopt a proposal without contentious debate.</p>
+                <p><strong>Practical example:</strong> The committee reaches consensus on a broadly supported recommendation to improve education access.</p>
+                <p><strong>Common mistakes:</strong> Assuming consensus means unanimous agreement; it means no strong opposition remains.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Diplomacy</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The art of managing international relations through tact, respect, and persuasive communication.</p>
+                <p><strong>Practical example:</strong> A delegate phrases criticism carefully and offers constructive alternatives to keep negotiations moving.</p>
+                <p><strong>Common mistakes:</strong> Being overly aggressive or confrontational; diplomacy depends on maintaining professional tone and relationships.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="glossary-category" id="advanced-procedure">
+          <div class="category-summary">
+            <div>
+              <h2>Advanced Parliamentary Procedure</h2>
+              <p>Explore the more complex procedural tools delegates can use to manage debate, revisit decisions, and keep the committee on track.</p>
+            </div>
+            <span class="details-count">5 entries</span>
+          </div>
+          <details class="category-panel" open>
+            <summary>Advanced Parliamentary Procedure</summary>
+            <div class="glossary-card">
+              <h3>Suspension of Rules</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to temporarily suspend specific rules in order to allow a different procedure or to expedite committee business.</p>
+                <p><strong>Practical example:</strong> Delegates motion to suspend the speakers list to allow an immediate unmoderated caucus.</p>
+                <p><strong>Common mistakes:</strong> Assuming all rules can be suspended; only the specific rules stated in the motion can be paused.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Closure of Debate</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> Another term for a motion to close debate on the current draft resolution or amendment.</p>
+                <p><strong>Practical example:</strong> When debate has been thorough, delegates may make a motion to close debate and move to voting.</p>
+                <p><strong>Common mistakes:</strong> Pushing it too early; chairs often request sufficient speaking opportunities before closing debate.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Tabling</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A motion to set a draft resolution or amendment aside temporarily, often to consider other documents first.</p>
+                <p><strong>Practical example:</strong> Delegates table a controversial draft resolution to focus on a stronger proposal.</p>
+                <p><strong>Common mistakes:</strong> Confusing tabling with adjournment; tabling pauses consideration, but the committee remains open.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Reconsideration</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> A procedural motion to reopen debate on a decision or vote that has recently taken place.</p>
+                <p><strong>Practical example:</strong> A delegate motions to reconsider a resolution after new evidence is presented.</p>
+                <p><strong>Common mistakes:</strong> Assuming it is a regular motion; it often requires special rules and may be limited to certain timeframes.</p>
+              </div>
+            </div>
+            <div class="glossary-card">
+              <h3>Parliamentary Procedure</h3>
+              <div class="entry-meta">
+                <p><strong>Definition:</strong> The rules and customs that govern how committees conduct business, including motions, voting, and speaking rights.</p>
+                <p><strong>Practical example:</strong> Following parliamentary procedure ensures motions are made, seconded, and voted on in an orderly manner.</p>
+                <p><strong>Common mistakes:</strong> Ignoring procedure when you disagree; proper procedure protects fairness and gives every delegate a chance to participate.</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="cheat-sheet" id="cheat-sheet">
+          <div class="cheat-card">
+            <h3>Most Common Motions</h3>
+            <ul>
+              <li>Motion to Set the Agenda</li>
+              <li>Motion for a Moderated Caucus</li>
+              <li>Motion for an Unmoderated Caucus</li>
+              <li>Motion to Close Debate</li>
+              <li>Motion to Adjourn the Meeting</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h3>Most Common Points</h3>
+            <ul>
+              <li>Point of Information</li>
+              <li>Point of Order</li>
+              <li>Point of Personal Privilege</li>
+              <li>Point of Parliamentary Inquiry</li>
+            </ul>
+          </div>
+          <div class="cheat-card">
+            <h3>Most Common Voting Procedures</h3>
+            <ul>
+              <li>Simple Majority</li>
+              <li>Two-Thirds Majority</li>
+              <li>Roll Call Vote</li>
+              <li>Abstention</li>
+            </ul>
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          <p>This glossary is built to support beginners and provide quick reference material for delegates preparing for committee debate and resolution writing.</p>
+        </footer>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+  <script>
+    const categoryLinks = Array.from(document.querySelectorAll('.category-list a'));
+    const categories = Array.from(document.querySelectorAll('.glossary-category'));
+    const detailsPanels = Array.from(document.querySelectorAll('details.category-panel'));
+    const cards = Array.from(document.querySelectorAll('.glossary-card'));
+    const searchInput = document.getElementById('glossarySearch');
+    const searchResults = document.getElementById('searchResults');
+    const noResults = document.getElementById('noResults');
+    const originalCardHTML = cards.map(card => card.innerHTML);
+
+    function escapeRegExp(text) {
+      return text.replace(/[-\\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
+    function setAllCategories(open) {
+      // open/close details only within visible category or search results
+      const activeCategory = categories.find(c => c.classList.contains('active'));
+      const scope = searchInput.value.trim() ? searchResults : (activeCategory || document);
+      const scopeDetails = scope.querySelectorAll ? Array.from(scope.querySelectorAll('details')) : [];
+      scopeDetails.forEach(d => d.open = open);
+    }
+
+    function activateCategory(id) {
+      categories.forEach(c => c.classList.toggle('active', c.id === id));
+      categories.forEach(c => c.style.display = c.classList.contains('active') ? '' : 'none');
+      categoryLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      // close any open search results when category selected
+      searchResults.classList.remove('active');
+      noResults.classList.remove('active');
+      // ensure first details in the category are closed by default
+      const firstDetails = document.querySelector('#' + id + ' details');
+      if (firstDetails) firstDetails.open = false;
+      // smooth scroll to top of right column
+      const right = document.querySelector('.content-grid section');
+      if (right) right.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    categoryLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = link.getAttribute('href').slice(1);
+        searchInput.value = '';
+        activateCategory(id);
+      });
+    });
+
+    function updateView() {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        // show selected category (or first if none)
+        const active = categories.find(c => c.classList.contains('active')) || categories[0];
+        const id = active.id;
+        activateCategory(id);
+        return;
+      }
+
+      // search mode: show results pane
+      searchResults.innerHTML = '';
+      let count = 0;
+      cards.forEach((card, idx) => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(q)) {
+          const item = document.createElement('div');
+          item.className = 'glossary-card';
+          const pattern = new RegExp('(' + escapeRegExp(q) + ')', 'gi');
+          item.innerHTML = originalCardHTML[idx].replace(pattern, '<mark>$1</mark>');
+          searchResults.appendChild(item);
+          count++;
+        }
+      });
+
+      // hide category sections
+      categories.forEach(c => c.style.display = 'none');
+      // show results
+      searchResults.classList.toggle('active', count > 0);
+      noResults.classList.toggle('active', count === 0);
+      // scroll to top of results
+      if (count > 0) searchResults.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // wire search input
+    searchInput.addEventListener('input', () => {
+      updateView();
+    });
+
+    // initialize: activate first category
+    if (categories.length) {
+      activateCategory(categories[0].id);
+    }
+  </script>
+</body>
+</html>
